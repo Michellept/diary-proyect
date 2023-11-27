@@ -1,1 +1,34 @@
-<p>login works!</p>
+<div class="container-main">
+  <div class="card-container">
+    <div class="card">
+      <span class="loader"></span>
+      <form class="form" formGroup="formLogin">
+        <label>Usuario</label>
+        <input
+          class="input-custom"
+          matInput
+          type="email"
+          formControlName="userEmail"
+        />
+        <small *ngIf="isValidField('userEmail')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
+        <label>Contraseña</label>
+
+        <input
+          class="input"
+          matInput
+          type="password"
+          formControlName="userPassword"
+        />
+
+        <small *ngIf="isValidField('userPassword')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
+        <button class="btn btn-primary mt-5" type="button" (click)="login()">
+          Ingresar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

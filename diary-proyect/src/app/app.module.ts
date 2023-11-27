@@ -3,20 +3,29 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './module/pages/login/login.component';
-import { ListContactComponent } from './module/pages/contact/list-contact/list-contact.component';
-import { NewContactComponent } from './module/pages/contact/new-contact/new-contact.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from './material/material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    ListContactComponent,
-    NewContactComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    RouterModule,
+    MaterialModule,
+    HttpClientModule,
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
