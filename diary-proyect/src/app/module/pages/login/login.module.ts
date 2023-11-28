@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './pages/login.component';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,9 @@ import { LoginComponent } from './pages/login.component';
   ],
   imports: [
     CommonModule,
-    LoginRoutingModule
+    LoginRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class LoginModule { }

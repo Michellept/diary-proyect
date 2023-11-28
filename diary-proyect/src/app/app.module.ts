@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
     MaterialModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
 
   ],
   providers: [],

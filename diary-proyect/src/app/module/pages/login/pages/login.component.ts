@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {
+
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthLoginService } from 'src/app/module/services/auth-login.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { authInterface } from 'src/app/module/services/interface/auth-interface';
 
 @Component({
   selector: 'app-login',
@@ -14,27 +16,43 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  formLogin: FormGroup = this.fb.group({
-    userEmail: ['', Validators.required],
-    userPassword: ['', Validators.required],
-  });
+
+   
+
   constructor(
     private fb: FormBuilder,
-    private router: Router,
+    private router: Router, 
     private snackBar: MatSnackBar,
     private authService: AuthLoginService
-  ) {}
+  ) {
 
-  ngOnInit(): void {}
+  }
 
-  login() {
+  formLogin: FormGroup  = this.fb.group({
+    authUser: ['', Validators.required],
+    authPassword: ['', Validators.required],
+  })
+
+  ngOnInit(): void {
+    
+  }
+
+
+  onLogin() {
+
+    console.log(this.formLogin.value);
+    
+    const model :authInterface  = {
+      authUser: this.formLogin.value.authUser,
+      authPassword: this.formLogin.value.authPassword
+    }
+
     if (this.formLogin.valid) {
-      const credentialsToSend = {
-        authUser: this.formLogin.value.userEmail,
-        authPassword: this.formLogin.value.userPassword,
-      };
-      this.authService.logIn(credentialsToSend).subscribe({
+      console.log(this.formLogin);
+      this.authService.logIn(model).subscribe({        
         next: (response) => {
+          console.log(response);
+          
           if (response.succeed) {
             this.router.navigate(['/list-contact']);
           }

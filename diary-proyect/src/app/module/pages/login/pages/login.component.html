@@ -2,15 +2,15 @@
   <div class="card-container">
     <div class="card">
       <span class="loader"></span>
-      <form class="form" formGroup="formLogin">
+      <form class="form" [formGroup]="formLogin">
         <label>Usuario</label>
         <input
           class="input-custom"
           matInput
           type="email"
-          formControlName="userEmail"
+          formControlName="authUser"
         />
-        <small *ngIf="isValidField('userEmail')" class="text-danger"
+        <small *ngIf="isValidField('authUser')" class="text-danger"
           >Este campos es obligatorio</small
         >
         <label>Contraseña</label>
@@ -19,13 +19,13 @@
           class="input"
           matInput
           type="password"
-          formControlName="userPassword"
+          formControlName="authPassword"
         />
 
-        <small *ngIf="isValidField('userPassword')" class="text-danger"
+        <small *ngIf="isValidField('authPassword')" class="text-danger"
           >Este campos es obligatorio</small
         >
-        <button class="btn btn-primary mt-5" type="button" (click)="login()">
+        <button class="btn btn-primary mt-5" type="button" (click)="onLogin()">
           Ingresar
         </button>
       </form>

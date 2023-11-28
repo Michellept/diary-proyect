@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
+import { authInterface } from './interface/auth-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthLoginService {
    {}
   headers = new HttpHeaders().set('x-api-key', '7802c4c0');
 
-  logIn(credentials : authService): Observable<any> {
+  logIn(credentials : authInterface): Observable<any> {
     const myObjCredentials  = {
       authUser: credentials.authUser,
       authPassword: credentials.authPassword,
@@ -43,7 +44,3 @@ export class AuthLoginService {
 }
 
 
-export interface authService{
-  authUser: string,
-  authPassword: string,
-}
