@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ContactRoutingModule } from './contact-routing.module';
 import { ListContactComponent } from './pages/list-contact/list-contact.component';
 import { NewContactComponent } from './pages/new-contact/new-contact.component';
+import { AppModule } from 'src/app/app.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { NewContactComponent } from './pages/new-contact/new-contact.component';
   ],
   imports: [
     CommonModule,
-    ContactRoutingModule
+    AppModule,
+    
   ]
 })
 export class ContactModule { }
