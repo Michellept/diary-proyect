@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 
     console.log(this.formLogin.value);
     
-    const model :authInterface  = {
+    const model : authInterface  = {
       authUser: this.formLogin.value.authUser,
       authPassword: this.formLogin.value.authPassword
     }

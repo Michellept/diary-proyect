@@ -1,1 +1,57 @@
-<p>register works!</p>
+<div class="container-main">
+  <div class="card-container">
+    <div class="card">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="56"
+        height="56"
+        fill="currentColor"
+        class="bi bi-person-circle"
+        viewBox="0 0 16 16"
+      >
+        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+        <path
+          fill-rule="evenodd"
+          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+        />
+      </svg>
+      <form class="form" [formGroup]="formRegister">
+        <label>Nombre</label>
+        <input class="form-control" type="name" formControlName="nameUser" />
+        <small *ngIf="isValidField('nameUser')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
+
+        <label>Usuario</label>
+        <input class="form-control" type="email" formControlName="authUser" />
+        <small *ngIf="isValidField('authUser')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
+
+        <label>Contraseña</label>
+
+        <input
+          class="form-control"
+          type="text"
+          formControlName="authPassword"
+        />
+
+        <small *ngIf="isValidField('authPassword')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
+
+        <div class="input-group mt-3">
+          <input type="file" class="form-control" formControlName="userPhoto" />
+        </div>
+
+        <button
+          class="btn btn-primary mt-5"
+          type="button"
+          (click)="onRegister()"
+        >
+          Crear usuario
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

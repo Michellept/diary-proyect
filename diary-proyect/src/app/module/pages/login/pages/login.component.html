@@ -5,10 +5,10 @@
       <form class="form" [formGroup]="formLogin">
         <label>Usuario</label>
         <input
-          class="input-custom"
-          matInput
+        class="form-control"
           type="email"
           formControlName="authUser"
+          required="required"
         />
         <small *ngIf="isValidField('authUser')" class="text-danger"
           >Este campos es obligatorio</small
@@ -16,10 +16,11 @@
         <label>Contraseña</label>
 
         <input
-          class="input"
-          matInput
+        class="form-control"
           type="password"
           formControlName="authPassword"
+          required="required"
+
         />
 
         <small *ngIf="isValidField('authPassword')" class="text-danger"
@@ -28,6 +29,8 @@
         <button class="btn btn-primary mt-5" type="button" (click)="onLogin()">
           Ingresar
         </button>
+        <a class="link mt-3" routerLink="/register">Registrarse</a>
+
       </form>
     </div>
   </div>

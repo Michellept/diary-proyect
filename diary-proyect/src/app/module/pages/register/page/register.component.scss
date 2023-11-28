@@ -1,0 +1,17 @@
+.card-container {
+    height: 90vh;
+    display: grid;
+    place-items: center;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card, .form {
+    background-color: white;
+    border-radius: 32px;
+    padding: 2rem;
+    display: grid;
+    place-items: center;
+    justify-content: center;
+    align-items: center;
+  }
