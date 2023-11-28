@@ -11,7 +11,7 @@ export class ContactService {
   constructor(private httpclient: HttpClient) {}
   headers = new HttpHeaders().set('x-api-key', '7802c4c0');
 
-  getAllContacts(): Observable<any> {
+  getAllContacts(data:any): Observable<any> {
     return this.httpclient.put<any>(
       this.url + `contacts`,
       { offset: 1, limit: 10, searchTerm: '' },
