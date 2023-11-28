@@ -21,9 +21,9 @@ constructor(
 
 ){
   this.formRegister = this.fb.group({
-    authUser: ['', [Validators.required]],
-    authPassword: ['', [Validators.required]],
-    nameUser: ['', [Validators.required]],
+    userEmail: ['', [Validators.required]],
+    userPassword: ['', [Validators.required]],
+    userName: ['', [Validators.required]],
     userPhoto: [''],
 
   });
@@ -38,9 +38,9 @@ onRegister(){
   console.log(this.formRegister.value);
   
   const modelRegister ={
-    authUser: this.formRegister.value.authUser,
-    authPassword: this.formRegister.value.authPassword,
-    nameUser: this.formRegister.value.nameUser,
+    userEmail: this.formRegister.value.userEmail,
+    userPassword: this.formRegister.value.userPassword,
+    userName: this.formRegister.value.userName,
     userPhoto: this.formRegister.value.userPhoto
   };
 

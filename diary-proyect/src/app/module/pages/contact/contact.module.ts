@@ -5,6 +5,7 @@ import { ContactRoutingModule } from './contact-routing.module';
 import { ListContactComponent } from './pages/list-contact/list-contact.component';
 import { NewContactComponent } from './pages/new-contact/new-contact.component';
 import { AppModule } from 'src/app/app.module';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { AppModule } from 'src/app/app.module';
   ],
   imports: [
     CommonModule,
-    AppModule,
+    ContactRoutingModule,
+    RouterModule,
     
   ]
 })

@@ -17,14 +17,14 @@
       </svg>
       <form class="form" [formGroup]="formRegister">
         <label>Nombre</label>
-        <input class="form-control" type="name" formControlName="nameUser" />
-        <small *ngIf="isValidField('nameUser')" class="text-danger"
+        <input class="form-control" type="name" formControlName="userName" />
+        <small *ngIf="isValidField('userName')" class="text-danger"
           >Este campos es obligatorio</small
         >
 
-        <label>Usuario</label>
-        <input class="form-control" type="email" formControlName="authUser" />
-        <small *ngIf="isValidField('authUser')" class="text-danger"
+        <label>Correo</label>
+        <input class="form-control" type="email" formControlName="userEmail" />
+        <small *ngIf="isValidField('userEmail')" class="text-danger"
           >Este campos es obligatorio</small
         >
 
@@ -33,10 +33,10 @@
         <input
           class="form-control"
           type="text"
-          formControlName="authPassword"
+          formControlName="userPassword"
         />
 
-        <small *ngIf="isValidField('authPassword')" class="text-danger"
+        <small *ngIf="isValidField('userPassword')" class="text-danger"
           >Este campos es obligatorio</small
         >
 
@@ -51,6 +51,13 @@
         >
           Crear usuario
         </button>
+
+        <button
+        class="btn btn-secondary mt-2"
+        type="button"
+        [routerLink]="['/auth/login']" >
+        Cancelar
+      </button>
       </form>
     </div>
   </div>

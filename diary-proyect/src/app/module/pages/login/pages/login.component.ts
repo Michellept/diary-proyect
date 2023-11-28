@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   }
 
 
-  onLogin() {
+  async onLogin() {
 
     console.log(this.formLogin.value);
     
@@ -55,6 +55,9 @@ export class LoginComponent implements OnInit {
           
           if (response.succeed) {
             this.router.navigate(['/list-contact']);
+            this.snackBar.open(
+              'Usuario autenticado exitosamente',
+            )
           }
         },
         error(err) {
