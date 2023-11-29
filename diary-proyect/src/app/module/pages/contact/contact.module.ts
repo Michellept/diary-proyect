@@ -6,6 +6,7 @@ import { ListContactComponent } from './pages/list-contact/list-contact.componen
 import { NewContactComponent } from './pages/new-contact/new-contact.component';
 import { RouterModule } from '@angular/router';
 import { ComponentsModule } from '../../components/components.module';
+import { MaterialModule } from '../../../material/material.module';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { ComponentsModule } from '../../components/components.module';
     ContactRoutingModule,
     RouterModule,
     ComponentsModule,
-
+    MaterialModule,
   ],
 })
 export class ContactModule { }

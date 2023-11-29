@@ -13,10 +13,12 @@
         <table class="table table-hover">
           <thead>
             <tr>
+              <th>Id</th>
               <th>Nombre</th>
               <th>Fecha de Cumpleaños</th>
               <th>Alias</th>
               <th>Empresa</th>
+              <th>Foto</th>
               <th>Notas</th>
               <th>Detalles</th>
             </tr>
@@ -24,12 +26,13 @@
           <tbody>
             <!--La directiva ngFor sirve para iterar los elementos de la tabla y mostrar los datos correspondientes dentro de un ciclo.-->
             <tr *ngFor="let dataList of dataTable;"class="mb-2">
+              <td> {{dataList['contactId']}}</td>
               <td> {{dataList['contactFirstName']}} {{dataList['contactLastName']}} </td>
               <td> {{dataList['contactBirthday']}}</td>
               <td> {{dataList['contactAlias']}}</td>
               <td> {{dataList['contactCompany']}}</td>
+              <td> <img src="{{dataList['contactPhoto']}} " alt="img contact"> </td>
               <td> {{dataList['contactNotes']}}</td>
-              <!-- <td> {{dataList['contactPhoto']}}</td> -->
               <td>
                 <!--Botones de editar y borrar en la tabla   <button class="btn-icons" (click)="confirmDelete()" >-->
                 <button class="btn btn-icons"  matTooltip="Editar Usuario">
@@ -53,5 +56,16 @@
             </tr>
           </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+          <mat-paginator
+            [length]=" allContact "
+            [pageSize]="limit"
+            [pageIndex]="currentPage - 1"
+             aria-label="Select page"
+            [showFirstLastButtons]="true"
+            (page)="pageChanged($event)"
+          >
+          </mat-paginator>
+        </div>
       </div>
     </div>
