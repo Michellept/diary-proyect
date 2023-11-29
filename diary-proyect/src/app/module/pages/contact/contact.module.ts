@@ -7,6 +7,7 @@ import { NewContactComponent } from './pages/new-contact/new-contact.component';
 import { RouterModule } from '@angular/router';
 import { ComponentsModule } from '../../components/components.module';
 import { MaterialModule } from '../../../material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MaterialModule } from '../../../material/material.module';
     CommonModule,
     ContactRoutingModule,
     RouterModule,
+    ReactiveFormsModule,
     ComponentsModule,
     MaterialModule,
   ],
