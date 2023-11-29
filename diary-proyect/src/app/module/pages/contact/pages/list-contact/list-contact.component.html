@@ -1,4 +1,4 @@
-
+<app-navbar></app-navbar>
 <div class="row p-3 animate__animated animate__fadeIn d-flex justify-content-center">
       <!------------------------------Table of tickets--------------------------------->
       <div
@@ -13,36 +13,26 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>Id</th>
               <th>Nombre</th>
-              <th>Correo</th>
-              <th></th>
-              <th>Empresa</th>
-              <th>Correo</th>
               <th>Fecha de Cumpleaños</th>
               <th>Alias</th>
+              <th>Empresa</th>
               <th>Notas</th>
-              <th>Etiquetas</th>
+              <th>Detalles</th>
             </tr>
           </thead>
           <tbody>
             <!--La directiva ngFor sirve para iterar los elementos de la tabla y mostrar los datos correspondientes dentro de un ciclo.-->
-            <tr
-              *ngFor="let dataList of dataTable; let cont = index"
-              class="mb-2"
-            >
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+            <tr *ngFor="let dataList of dataTable;"class="mb-2">
+              <td> {{dataList['contactFirstName']}} {{dataList['contactLastName']}} </td>
+              <td> {{dataList['contactBirthday']}}</td>
+              <td> {{dataList['contactAlias']}}</td>
+              <td> {{dataList['contactCompany']}}</td>
+              <td> {{dataList['contactNotes']}}</td>
+              <!-- <td> {{dataList['contactPhoto']}}</td> -->
               <td>
                 <!--Botones de editar y borrar en la tabla   <button class="btn-icons" (click)="confirmDelete()" >-->
-                <button class="btn-icons"  matTooltip="Editar Usuario">
+                <button class="btn btn-icons"  matTooltip="Editar Usuario">
                   <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                     class="bi bi-pencil-square" viewBox="0 0 16 16">
                     <path
@@ -51,7 +41,7 @@
                       d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                   </svg>
                 </button>
-                <button class="btn-icons" matTooltip="Desabilitar Usuario"> 
+                <button class="btn btn-icons" matTooltip="Desabilitar Usuario" (click)="deletContactId(dataList['contactId'])"> 
                   <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                     class="bi bi-person-x-fill" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"

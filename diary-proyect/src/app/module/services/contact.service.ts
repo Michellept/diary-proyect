@@ -32,8 +32,8 @@ export class ContactService {
   }
 
   deleteContact(idContact: number): Observable<any> {
-    return this.httpclient.delete<any>(this.url + `delete/${idContact}`, {
-      headers: this.headers,
-    });
+    return this.httpclient.delete<any>(this.url + `contacts/delete/` + idContact, 
+      {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),}
+    );
   }
 }

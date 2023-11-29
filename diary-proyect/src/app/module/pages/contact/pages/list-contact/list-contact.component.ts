@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContactService } from 'src/app/module/services/contact.service';
 
 @Component({
@@ -7,6 +8,7 @@ import { ContactService } from 'src/app/module/services/contact.service';
   styleUrls: ['./list-contact.component.scss']
 })
 export class ListContactComponent implements OnInit {
+  @Output() totalContactsChance = new EventEmitter<number>();
 
 public dataTable = []
 offset = 1;
@@ -18,16 +20,18 @@ currentPage = 1;
 totalPages = 0;
 
 constructor(
-  private  allContactService: ContactService, 
+  private  ContactService: ContactService, 
+  private  snackbar: MatSnackBar
 ){
 
 }
 
 ngOnInit(): void {
-    
+    this.getAllContacts(this.offset, this.searchTerm);
 }
 
-getAllContacts(offset: number, searchTerm: string): void{
+getAllContacts(offset: number, searchTerm: string){
+
       //calculate offset 
       this.offset = (offset - 1) * this.limit;
       //equalize searchTerm
@@ -39,16 +43,49 @@ getAllContacts(offset: number, searchTerm: string): void{
       searchTerm: this.searchTerm,
     };
 
-
-  this.allContactService.getAllContacts(data).subscribe({
+  
+  this.ContactService.getAllContacts(data).subscribe({
+    
     next: (response) => {
-      this.dataTable = response.data;
-      this.totalContacts = response.totalContacts;
-      this.totalContactsSum = response.totalContactsSum;
-      this.currentPage = response.currentPage;
-      this.totalPages = response.totalPages;
+      console.log(this.dataTable = response.result.list);
+      
+      this.dataTable = response.result.list; 
+           // this.totalContacts = response.result.totalContacts;
+      // this.totalContactsSum = response.totalContactsSum;
+      // this.currentPage = response.currentPage;
+      // this.totalPages = response.totalPages;
     },
   });
 }
+
+deletContactId(id:number){
+  this.ContactService.deleteContact(id).subscribe({
+    next: (response) => {
+
+      this.snackbar.open(response.message, 'Aceptar', {
+        duration: 1000 , 
+      })
+      
+      this.totalContactsSum -1;
+      
+
+      this.getAllContacts(this.offset, this.searchTerm);
+    },
+    error : (err) => {
+      this.snackbar.open(err.error.message, 'Aceptar', {
+        duration: 1000 , 
+      })
+    console.log(err);
+    
+    },
+    
+    complete: () => {
+      this.getAllContacts(1, '');
+      // this.totalContactsChance.emit(this.totalContactsSum);
+    }
+   
+  });
+}
+
 
 }

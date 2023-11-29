@@ -9,11 +9,10 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NavbarComponent } from './module/components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
-    AppComponent, NavbarComponent ],
+    AppComponent ],
   imports: [
     BrowserModule,
     AppRoutingModule,
