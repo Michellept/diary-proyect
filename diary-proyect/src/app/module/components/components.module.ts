@@ -4,21 +4,28 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FormComponent } from './form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { MaterialModule } from 'src/app/material/material.module';
+import { DialogConfirmationComponent } from './dialog-confirmation/dialog-confirmation.component';
+import { DialogLoadingComponent } from './dialog-loading/dialog-loading.component';
+
 
 @NgModule({
   declarations: [
     NavbarComponent,
     FormComponent,
+    DialogConfirmationComponent,
+    DialogLoadingComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    
+    MaterialModule,
   ],
   exports: [
     NavbarComponent,
     FormComponent,
-
+    DialogConfirmationComponent,
+    
   ]
 
 })
