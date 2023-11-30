@@ -40,6 +40,11 @@ export class AuthLoginService {
     return this.httpclient.get<any>(this.url +'users/profile',{headers:this.headers})
   }
 
+  registerNewUser(data:any){
+    return this.httpclient.post<any>(this.url +'users/create',
+    data,
+    {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),})
+  }
 
   
 

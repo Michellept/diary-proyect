@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ContactService } from 'src/app/module/services/contact.service';
+import { AuthLoginService } from 'src/app/module/services/auth-login.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,7 @@ constructor(
   private fb: FormBuilder,
   private router: Router,
   private snackBar: MatSnackBar,
-  private createUserService: ContactService,
+  private createUserService: AuthLoginService,
 
 ){
   this.formRegister = this.fb.group({
@@ -47,7 +47,7 @@ onRegister(){
 
 
   if(this.formRegister.valid){
-    this.createUserService.createContact(modelRegister).subscribe({
+    this.createUserService.registerNewUser(modelRegister).subscribe({
       next: (response) =>{
         console.log(response);
 
