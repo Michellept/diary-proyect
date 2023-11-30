@@ -64,8 +64,6 @@ export class ListContactComponent implements OnInit {
           this.allContact = this.allContact + this.countContact;
           localStorage.setItem('contact', this.allContact.toString());
 
-          const contador = localStorage.getItem('contact');
-          this.allContact = Number(contador) - 1;
 
           // console.log(localStorage.setItem('contact', this.allContact.toString())          );
 

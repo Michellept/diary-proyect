@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material.module';
 import { DialogConfirmationComponent } from './dialog-confirmation/dialog-confirmation.component';
 import { DialogLoadingComponent } from './dialog-loading/dialog-loading.component';
+import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -20,6 +22,8 @@ import { DialogLoadingComponent } from './dialog-loading/dialog-loading.componen
     CommonModule,
     ReactiveFormsModule,
     MaterialModule,
+    RouterModule,
+    
   ],
   exports: [
     NavbarComponent,

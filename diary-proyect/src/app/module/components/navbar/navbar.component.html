@@ -12,13 +12,33 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
 
-      <!-- body off canvas -->
+      <!-- body off canvas -->     
       <div class="offcanvas-body">
-|
-|
+        <a routerLink="/" >
+          <div class="logo-container p-3" fxLayout="column" fxLayoutAlign="center center" 
+            style="cursor: pointer;">
+            <img class="rounded" style="width: 30%;" src="{{dataUser.userPhoto}}" alt="user-photo">
+          </div>
+        </a>
+
+        <div>
+          <li>
+            {{dataUser.userName}} 
+          </li>
+
+    
+        </div>
         
-      </div>
- 
+        <div>
+          <button mat-button style="height: 50px; width:350px;" *ngFor="let module of sidebarItems" fxLayout="row" fxLayoutAlign="start center" [routerLink]="module.url" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: false}" (click)="openModule(module)">
+            <mat-icon class="btn-icons-menu" style=" size: 10px;   width:10% ">{{module.icon}}</mat-icon>
+            <p style="font-size: 20px;"><strong>{{module.label}} </strong></p>
+          </button>
+        </div>
+        
+      </div> 
+  
 
       <div class="offcanvas-footer m-5" >
         <h3>Numero de contactos: {{this.getNumberContacts}}</h3>

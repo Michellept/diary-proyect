@@ -11,8 +11,24 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  @Output() allContactChance = new EventEmitter<number>();
-  allContact = localStorage.getItem('contact')? Number(localStorage.getItem('contact')): 0;
+  @Output() onToggleMenu: EventEmitter<any> = new EventEmitter();
+  public sidebarItems = [
+    { label: 'Contactos', icon: 'user', url: '/list-contact' },
+    { label: 'Acerca de...', icon: 'settings', url: '/about'},
+  ];
+
+
+  public dataUser : any;
+  // dataUser: any = {
+  //   userEmail: localStorage.getItem('userEmail'),
+  //   userFullName: localStorage.getItem('userFullName'),
+  //   userId: localStorage.getItem('userId'),
+  //   userName: localStorage.getItem('userName'),
+  //   userPassword: localStorage.getItem('userPassword'),
+  //   userPhoto: localStorage.getItem('userPhoto'),
+
+  // };
+
 
   public getNumberContacts:number=0;
 constructor(
@@ -24,8 +40,57 @@ constructor(
 ){}
 
 ngOnInit(): void {
-this.getNumberContacts = localStorage.getItem('contact')? Number(localStorage.getItem('contact')): 0
+  this.getContact(); 
+  this.getNumberContacts = Number(localStorage.getItem('contact'));
+  // console.log(  this.getNumberContacts = Number(localStorage.getItem('contact'))  );
+  
+
 }
+openModule(module: any) {
+  this.onToggleMenu.emit(true);
+}
+
+
+getContact() {
+  this.authService.getUserLogeado().subscribe({
+    next: (response) => {
+      console.log('RESPONSE',response);
+      if (response.succeed) {
+        console.log(response);
+        this.dataUser = response.result.user;
+
+      }
+    },
+    error: (error) => {
+
+      console.log(error);
+    },
+  });
+}
+
+
+//getContact() {
+  //   this.authService.getUserLogeado().subscribe({
+  //     next: (data) => {
+  //       console.log(data);
+  //       this.dataUser = data.result.user;
+  //       console.log(this.dataUser);
+  //       localStorage.setItem('userEmail',this.dataUser.userEmail)
+  //       localStorage.setItem('userFullName',this.dataUser.userFullName)
+  //       localStorage.setItem('userId',this.dataUser.userId)
+  //       localStorage.setItem('userName',this.dataUser.userName)
+  //       localStorage.setItem('userPassword',this.dataUser.userPassword)
+  //       localStorage.setItem('userPhoto',this.dataUser.userPhoto)
+  //       localStorage.setItem("user", JSON.stringify(this.dataUser));
+  
+  //       this.dataUser = true;
+  //     },
+  //     error: (error) => {
+  //       console.log(error);
+  //     }
+  //   });
+  // }
+
 
 
 logOut(){

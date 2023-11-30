@@ -42,11 +42,13 @@ export class AuthLoginService {
 
 
   getUserLogeado():Observable<any>{
-    return this.httpclient.get<any>(this.url +'users/profile',
-    {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),})
-    
+    const idContact = 123;
+    return this.httpclient.get(this.url +'users/profile/' + idContact,
+    {
+      headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),
+    }
+  );
   }
-
   registerNewUser(data:any){
     return this.httpclient.post<any>(this.url +'users/create',
     data,
