@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArrayName, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { ContactService } from 'src/app/module/services/contact.service';
 
 @Component({
   selector: 'app-new-contact',
@@ -11,24 +13,90 @@ export class NewContactComponent implements OnInit  {
 
   formRegister!: FormGroup;
   userPhoneContact = this.fb.array([])
-  userEmailContact = this.fb.array([])
+  userEmail = this.fb.array([])
 
   constructor(
-     private fb: FormBuilder,
+    private fb: FormBuilder,
     private snackbar: MatSnackBar,
+    private createUserService: ContactService,
+    private router: Router
      ){}
 
 ngOnInit(): void {
   this.formRegister = this.fb.group({
     userName : ['', Validators.required],
     userLastName: ['',],
-    userEmail: ['', Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)],
+    userEmail: ['', [Validators.required, Validators.email]],
     userAlias: [''],
     userCompany:[''],
     userBirthday:[''],
     userPhoto:[''],
+    userNotes: [''],
+    userPassword: ['', Validators.required],
     userPhoneContact: this.fb.array(['', Validators.pattern(/^\(\d{3}\) \d{3}-\d{4}$/)]),
   })}
+
+
+
+  saveContact(){
+
+    const modelRegister = {
+
+      userName: this.formRegister.value.userName,
+      userLastName: this.formRegister.value.userLastName,
+      userEmail: this.formRegister.value.userEmail,
+      userAlias: this.formRegister.value.userAlias,
+      userCompany: this.formRegister.value.userCompany,
+      userBirthday: this.formRegister.value.userBirthday,
+      userPhoto: this.formRegister.value.userPhoto,
+      userNotes: this.formRegister.value.userNotes,
+      userPasswpord: this.formRegister.value.userPassword,
+      userPhoneContact: this.formRegister.value.userPhoneContact
+    };
+
+    console.log(modelRegister);
+
+
+
+    if(this.formRegister.valid){
+      this.createUserService.createContact(modelRegister).subscribe({
+     
+        next: (response) =>{
+          console.log(response);
+          console.log(response.succeed);
+
+          if(response.succeed){
+            this.snackbar.open('Usuario creado exitosamente', 'Aceptar', {
+              duration: 10 * 1000,
+              panelClass: ['green-snackbar']
+            }) 
+          // this.router.navigate(['/list-contact']);
+      
+          }
+          this.snackbar.open('Error al crear el usuario', 'Aceptar', {
+            duration: 10 * 1000,
+            panelClass: ['red-snackbar']
+          })
+        },
+      error: (err) =>{
+        console.log(err);
+        this.snackbar.open('Error al crear el usuario', 'Aceptar', {
+          duration: 10 * 1000,
+          panelClass: ['red-snackbar']
+        })
+      }
+      },)
+    }else {
+      this.snackbar.open('Error al crear el usuario', 'Aceptar', {
+        duration: 10 * 1000,
+        panelClass: ['red-snackbar']
+      })
+      console.log(this.formRegister.value);
+      this.formRegister.markAllAsTouched();
+      return;
+    }
+
+  }
 
 
 
@@ -40,11 +108,11 @@ this.userPhoneContact.push(this.fb.control(''))
 }
 
 deleteEmail(i:number){
-  this.userEmailContact.removeAt(i);
+  this.userEmail.removeAt(i);
 }
 
 addEmail(){
-  this.userEmailContact.push(this.fb.control(''))
+  this.userEmail.push(this.fb.control(''))
 }
 
 isValidField(field: string): boolean | null {
