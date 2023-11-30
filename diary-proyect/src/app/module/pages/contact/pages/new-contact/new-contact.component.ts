@@ -41,7 +41,6 @@ ngOnInit(): void {
   saveContact(){
 
     const modelRegister = {
-
       userName: this.formRegister.value.userName,
       userLastName: this.formRegister.value.userLastName,
       userEmail: this.formRegister.value.userEmail,
@@ -50,7 +49,7 @@ ngOnInit(): void {
       userBirthday: this.formRegister.value.userBirthday,
       userPhoto: this.formRegister.value.userPhoto,
       userNotes: this.formRegister.value.userNotes,
-      userPasswpord: this.formRegister.value.userPassword,
+      userPassword: this.formRegister.value.userPassword,
       userPhoneContact: this.formRegister.value.userPhoneContact
     };
 
@@ -65,18 +64,13 @@ ngOnInit(): void {
           console.log(response);
           console.log(response.succeed);
 
-          if(response.succeed){
+          if(response.succeed === true){
             this.snackbar.open('Usuario creado exitosamente', 'Aceptar', {
               duration: 10 * 1000,
               panelClass: ['green-snackbar']
             }) 
           // this.router.navigate(['/list-contact']);
-      
           }
-          this.snackbar.open('Error al crear el usuario', 'Aceptar', {
-            duration: 10 * 1000,
-            panelClass: ['red-snackbar']
-          })
         },
       error: (err) =>{
         console.log(err);
