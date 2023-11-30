@@ -1,6 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContactService } from 'src/app/module/services/contact.service';
+import { DialogConfirmationService } from '../../../../components/service/dialog-confirmation.service';
+import { DialogLoadingService } from 'src/app/module/components/service/dialog-loading.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list-contact',
@@ -23,7 +26,9 @@ export class ListContactComponent implements OnInit {
 
   constructor(
     private ContactService: ContactService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private dialogConfirmation:DialogConfirmationService,
+    private dialogLoading:DialogLoadingService
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +36,8 @@ export class ListContactComponent implements OnInit {
   }
 
   getAllContacts(offset: number, searchTerm: string) {
+    this.dialogLoading.show('Cargando', 'Espere por favor...Cargando');
+
     //calculate offset
     this.offset = (offset - 1) * this.limit;
     //equalize searchTerm
@@ -44,6 +51,13 @@ export class ListContactComponent implements OnInit {
 
     this.ContactService.getAllContacts(data).subscribe({
       next: (response) => {
+        if(response.succeed){
+            
+      
+
+      
+
+
         console.log(response);
         console.log((this.allContact = response.result));
         console.log((this.allContact = this.allContact + this.countContact));
@@ -76,7 +90,17 @@ export class ListContactComponent implements OnInit {
         this.totalPages = Math.ceil(this.allContact / this.limit);
         this.currentPage = this.offset / this.limit + 1;
         this.allContactChance.emit(this.allContact);
+
+      }
       },
+      error : (err)=>{
+        console.log(err);
+
+      },
+
+      complete: () => {
+        this.dialogLoading.finish();
+      }
     });
   }
   pageChanged(event: any): void {
@@ -112,4 +136,5 @@ export class ListContactComponent implements OnInit {
       },
     });
   }
+
 }
