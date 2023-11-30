@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArrayName, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ContactService } from 'src/app/module/services/contact.service';
@@ -10,30 +10,43 @@ import { ContactService } from 'src/app/module/services/contact.service';
   styleUrls: ['./new-contact.component.scss']
 })
 export class NewContactComponent implements OnInit  {
+  selectedType: string = ''; // Variable para almacenar el tipo seleccionado
+
+  typeForm = [
+     {
+     name:'hause',
+    },
+    {
+      name:'phone',
+    },
+    {
+      name:'whatsapp',
+    }
+  ]
+
 
   formRegister!: FormGroup;
-  userPhoneContact = this.fb.array([])
-  userEmail = this.fb.array([])
+  contactPhone = this.fb.array([])
+  contactEmail = this.fb.array([])
 
   constructor(
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
-    private createUserService: ContactService,
+    private createcontactService: ContactService,
     private router: Router
      ){}
 
 ngOnInit(): void {
   this.formRegister = this.fb.group({
-    userName : ['', Validators.required],
-    userLastName: ['',],
-    userEmail: ['', [Validators.required, Validators.email]],
-    userAlias: [''],
-    userCompany:[''],
-    userBirthday:[''],
-    userPhoto:[''],
-    userNotes: [''],
-    userPassword: ['', Validators.required],
-    userPhoneContact: this.fb.array(['', Validators.pattern(/^\(\d{3}\) \d{3}-\d{4}$/)]),
+    contactFirstName : ['', Validators.required],
+    contactLastName: ['', Validators.required],
+    contactEmail: ['', [Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
+    contactAlias: [''],
+    contactCompany:[''],
+    contactBirthday:['', Validators.required],
+    contactPhoto:[''],
+    contactNotes: [''],
+    contactPhone: this.fb.array([], [ Validators.pattern(/^[0-9]+$/), Validators.minLength(10), Validators.maxLength(11),])  // También puedes aplicar Validators.required si el FormArray no debe estar vacío
   })}
 
 
@@ -41,16 +54,15 @@ ngOnInit(): void {
   saveContact(){
 
     const modelRegister = {
-      userName: this.formRegister.value.userName,
-      userLastName: this.formRegister.value.userLastName,
-      userEmail: this.formRegister.value.userEmail,
-      userAlias: this.formRegister.value.userAlias,
-      userCompany: this.formRegister.value.userCompany,
-      userBirthday: this.formRegister.value.userBirthday,
-      userPhoto: this.formRegister.value.userPhoto,
-      userNotes: this.formRegister.value.userNotes,
-      userPassword: this.formRegister.value.userPassword,
-      userPhoneContact: this.formRegister.value.userPhoneContact
+      contactFirstName: this.formRegister.value.contactFirstName,
+      contactLastName: this.formRegister.value.contactLastName,
+      contactEmail: this.formRegister.value.contactEmail,
+      contactAlias: this.formRegister.value.contactAlias,
+      contactCompany: this.formRegister.value.contactCompany,
+      contactBirthday: this.formRegister.value.contactBirthday,
+      contactPhoto: this.formRegister.value.contactPhoto,
+      contactNotes: this.formRegister.value.contactNotes,
+      contactPhone: this.formRegister.value.contactPhone
     };
 
     console.log(modelRegister);
@@ -58,7 +70,7 @@ ngOnInit(): void {
 
 
     if(this.formRegister.valid){
-      this.createUserService.createContact(modelRegister).subscribe({
+      this.createcontactService.createContact(modelRegister).subscribe({
      
         next: (response) =>{
           console.log(response);
@@ -85,7 +97,7 @@ ngOnInit(): void {
         duration: 10 * 1000,
         panelClass: ['red-snackbar']
       })
-      console.log(this.formRegister.value);
+      console.log(this.formRegister.value) ;
       this.formRegister.markAllAsTouched();
       return;
     }
@@ -94,24 +106,37 @@ ngOnInit(): void {
 
 
 
+  
+  get getcontactPhoneFormArray() {
+    return this.formRegister.get('contactPhone') as FormArray;
+}
+
 deletePhone(i: number){
-  this.userPhoneContact.removeAt(i);
+  this.getcontactPhoneFormArray.removeAt(i);
 }
 addPhone(){
-this.userPhoneContact.push(this.fb.control(''))
+this.getcontactPhoneFormArray.push(this.fb.control(''))
 }
 
 deleteEmail(i:number){
-  this.userEmail.removeAt(i);
+  this.contactEmail.removeAt(i);
 }
 
 addEmail(){
-  this.userEmail.push(this.fb.control(''))
+  this.contactEmail.push(this.fb.control(''))
 }
 
 isValidField(field: string): boolean | null {
   const control = this.formRegister.controls[field];
   return control && control.invalid && control.touched;
 }
+
+isFormatField(field: any): boolean | null {
+  const control = this.fb.array(field);{
+    return control && control.invalid && control.touched;
+  }
+}
+
+
 
 }
