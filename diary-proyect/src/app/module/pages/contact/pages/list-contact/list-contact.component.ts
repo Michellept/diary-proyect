@@ -37,7 +37,10 @@ export class ListContactComponent implements OnInit {
   }
 
   getAllContacts(offset: number, searchTerm: string) {
-    this.dialogLoading.show('Espere por favor, Cargando...', 'Consultando contactos');
+    this.dialogLoading.show(
+      'Espere por favor, Cargando...',
+      'Consultando contactos'
+    );
 
     //calculate offset
     this.offset = (offset - 1) * this.limit;
@@ -61,25 +64,21 @@ export class ListContactComponent implements OnInit {
           this.allContact = this.allContact + this.countContact;
           localStorage.setItem('contact', this.allContact.toString());
 
-          console.log('offset', this.offset);
-          console.log('searchTerm', this.searchTerm);
-          console.log('limit', this.limit);
-          console.log('allContact', this.allContact);
-          console.log('currentPage', this.currentPage);
-          console.log('totalPages', this.totalPages);
+          const contador = localStorage.getItem('contact');
+          this.allContact = Number(contador) - 1;
 
-          console.log((this.dataTable = response.result.count));
+          // console.log(localStorage.setItem('contact', this.allContact.toString())          );
+
+          console.log('allContact', this.allContact);
+
+          // console.log((this.dataTable = response.result.count));
           const data = response.result.list;
           this.dataTable = data;
 
-          // console.log(data.length + this.offset, "data length");
-          // console.log(this.limit + this.limit - this.allContact);
-          // console.log((data.length + this.offset) / this.limit + this.limit - this.allContact);
-
           const end =
-            (data.length + this.offset) / this.limit +
-            this.limit -
-            this.allContact;
+          (data.length + this.offset) / this.limit +
+          this.limit -
+          this.allContact;
           this.dataTable = data.result.list.splice(0, this.limit - end);
 
           this.totalPages = Math.ceil(this.allContact / this.limit);
@@ -113,9 +112,7 @@ export class ListContactComponent implements OnInit {
       },
     });
 
-
     if (dialog) {
-
       dialog.afterClosed().subscribe((confirmation) => {
         if (confirmation) {
           this.ContactService.deleteContact(id).subscribe({
@@ -123,12 +120,12 @@ export class ListContactComponent implements OnInit {
               if (response.succeed) {
                 console.log(response);
                 this.countContact--;
-  
-                this.dialogLoading.show( 'Cargando', '  Espere por favor...');
+
+                this.dialogLoading.show('Cargando', '  Espere por favor...');
                 this.snackbar.open(response.message, 'Aceptar', {
                   duration: 1000,
                 });
-  
+
                 this.getAllContacts(this.offset, this.searchTerm);
               }
             },
@@ -138,7 +135,7 @@ export class ListContactComponent implements OnInit {
               });
               console.log(err);
             },
-  
+
             //finish the next and error...
             complete: () => {
               this.getAllContacts(1, '');
@@ -149,6 +146,5 @@ export class ListContactComponent implements OnInit {
         }
       });
     }
-
   }
 }

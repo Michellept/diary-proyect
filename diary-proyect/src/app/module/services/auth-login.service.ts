@@ -27,17 +27,24 @@ export class AuthLoginService {
     return this.httpclient.put<any>(this.url +'auth/login',myObjCredentials,{headers:this.headers});
   }
   logOut(): Observable<any> {
-    return this.httpclient.delete<any>(this.url +'auth/logout',{ headers:this.headers});
+    return this.httpclient.delete<any>(this.url +'auth/logout',
+    
+    {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),})
+
   }
 
 
   tokenRefresh():Observable<any>{
-    return this.httpclient.post<any>(this.url +'auth/refresh',{headers:this.headers})
+    return this.httpclient.post<any>(this.url +'auth/refresh',
+    {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),})
+
   }
 
 
   getUserLogeado():Observable<any>{
-    return this.httpclient.get<any>(this.url +'users/profile',{headers:this.headers})
+    return this.httpclient.get<any>(this.url +'users/profile',
+    {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),})
+    
   }
 
   registerNewUser(data:any){
