@@ -20,6 +20,8 @@ export class ContactService {
   }
 
   createContact(data:any): Observable<any> {
+    console.log(data);
+    
     return this.httpclient.post<any>(this.url + `contacts/create`, 
     data,
     {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),}

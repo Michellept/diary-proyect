@@ -113,13 +113,12 @@ export class ListContactComponent implements OnInit {
     if (dialog) {
       dialog.afterClosed().subscribe((confirmation) => {
         if (confirmation) {
+          this.dialogLoading.show('Cargando', '  Espere por favor...');
           this.ContactService.deleteContact(id).subscribe({
             next: (response) => {
               if (response.succeed) {
                 console.log(response);
                 this.countContact--;
-
-                this.dialogLoading.show('Cargando', '  Espere por favor...');
                 this.snackbar.open(response.message, 'Aceptar', {
                   duration: 1000,
                 });

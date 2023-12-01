@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
 
 <form [formGroup]="formRegister" autocomplete="off">
-    <div class="container card mt-5">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <!-- <div class="input-group mb-3">
+  <div class="container card mt-5">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+       <div class="input-group mb-3">
 
-                <button class="btn btn-primary mt-3 mb-5 btn-block"  (click)="addPhone()"  data-bs-toggle="dropdown" type="button">
+                <button class="btn btn-primary mt-3 mb-5 btn-block"  (click)="addPhone()" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-telephone-fill" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -13,204 +13,231 @@
                     </svg>
                     + Agregar Telefono
                 </button>
-              </div> -->
+              </div> 
+      <button
+        class="btn btn-primary mt-3 mb-5 btn-block"
+        type="button"
+        (click)="addEmail()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-envelope-plus-fill"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 4.697v4.974A4.491 4.491 0 0 0 12.5 8a4.49 4.49 0 0 0-1.965.45l-.338-.207z"
+          />
+          <path
+            d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5"
+          /></svg
+        >Agregar Correo
+      </button>
+    </div>
+    <div
+      class="row col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center"
+    >
+      <h3>Datos de contacto</h3>
 
-            <!-- ... Otros códigos ... -->
-            <div class="input-group mb-3">
-                <button class="btn btn-primary mt-3 mb-5 btn-block dropdown-toggle dropdown-toggle-split"
-                    data-bs-toggle="dropdown" type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-telephone-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
-                    </svg>
-                    + Agregar Telefono
-                </button>
-
-                <ul class="dropdown-menu">
-                    <li *ngFor="let item of typeForm" class="dropdown-item" (click)="addPhone()">
-                        {{ item.name }}
-                    </li>
-                </ul>
-            </div>
-            <!-- ... Otros códigos ... -->
-
-            <button class="btn btn-primary mt-3 mb-5 btn-block" type="button" (click)="addEmail()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-envelope-plus-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 4.697v4.974A4.491 4.491 0 0 0 12.5 8a4.49 4.49 0 0 0-1.965.45l-.338-.207z" />
-                    <path
-                        d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5" />
-                </svg>Agregar Correo
-            </button>
-        </div>
-        <div class="row col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center">
-            <h3>Datos de contacto</h3>
-
-            <div class="col-3 mb-4">
-                <label class="form-label">Nombre</label>
-                <input type="text" class="form-control" placeholder="Nombre" formControlName="contactFirstName" />
-                <small *ngIf="isValidField('contactFirstName')" class="text-danger">Este campos es obligatorio</small>
-            </div>
-            <div class="col-3 mb-4">
-                <label class="form-label">Apellido</label>
-                <input type="text" class="form-control" placeholder="Apellido" formControlName="contactLastName" />
-                <small *ngIf="isValidField('contactLastName')" class="text-danger">Este campos es obligatorio</small>
-            </div>
-            <div class="col-3 mb-4">
+      <div class="col-3 mb-4">
+        <label class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nombre"
+          formControlName="contactFirstName"
+        />
+        <small *ngIf="isValidField('contactFirstName')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
+      </div>
+      <div class="col-3 mb-4">
+        <label class="form-label">Apellido</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Apellido"
+          formControlName="contactLastName"
+        />
+        <small *ngIf="isValidField('contactLastName')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
+      </div>
+      <!-- <div class="col-3 mb-4">
                 <label class="form-label">Correo</label>
                 <input type="email" class="form-control" placeholder="Correo" formControlName="contactEmail" />
                 <small *ngIf="isValidField('contactEmail')" class="text-danger">El formato debe ser example@gmail.com</small>
-            </div>
-            <div class="col-3 mb-4">
-                <label class="form-label">Alias</label>
-                <input type="text" class="form-control" placeholder="Alias" formControlName="contactAlias" />
-            </div>
-            <div class="col-3 mb-4">
-                <label class="form-label">Empresa</label>
-                <input type="text" class="form-control" placeholder="Empresa" formControlName="contactCompany" />
-            </div>
-            <div class="col-3 mb-4">
-                <label class="form-label">Cumpleaños</label>
-                <input type="datetime-local" class="form-control" placeholder="Cumpleaños"
-                    formControlName="contactBirthday" />
-                <small *ngIf="isValidField('contactBirthday')" class="text-danger">Este campos es obligatorio</small>
-            </div>
-            <div class="col-4 mb-4">
-                <label class="form-label">Fotografia</label>
-                <input type="file" class="form-control" formControlName="contactPhoto" />
-            </div>
+            </div> -->
+      <div class="col-3 mb-4">
+        <label class="form-label">Alias</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Alias"
+          formControlName="contactAlias"
+        />
+      </div>
+      <div class="col-3 mb-4">
+        <label class="form-label">Empresa</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Empresa"
+          formControlName="contactCompany"
+        />
+      </div>
+      <div class="col-3 mb-4">
+        <label class="form-label">Cumpleaños</label>
+        <input
+          type="datetime-local"
+          class="form-control"
+          placeholder="Cumpleaños"
+          formControlName="contactBirthday"
+        />
+        <small *ngIf="isValidField('contactBirthday')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
+      </div>
+      <div class="col-4 mb-4">
+        <label class="form-label">Fotografia</label>
+        <input
+          type="file"
+          class="form-control"
+          formControlName="contactPhoto"
+        />
+      </div>
 
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                    style="height: 100px" formControlName="contactNotes"></textarea>
-                <label for="floatingTextarea2">Notas</label>
-            </div>
-        </div>
+      <div class="form-floating">
+        <textarea
+          class="form-control"
+          placeholder="Leave a comment here"
+          id="floatingTextarea2"
+          style="height: 100px"
+          formControlName="contactNotes"
+        ></textarea>
+        <label for="floatingTextarea2">Notas</label>
+      </div>
+    </div>
 
-        <!-- table for email -->
-        <div class="row col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center">
-            <div class="col">
-                <table class="table table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Correo</th>
-                            <th>Tipo</th>
-                            <th>Detalles</th>
-                        </tr>
-                    </thead>
-                    <tbody formArrayName="contactEmail">
-                        <tr *ngFor="let phoneData of contactEmail.controls; let i = index">
-                            <td>{{ i + 1 }}</td>
-                            <td>
-                                <input type="text" class="form-control" [formControlName]="i" />
-                                <small *ngIf="isValidField('i')" class="text-danger">Este campos es obligatorio</small>
-                            </td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-danger" (click)="deleteEmail(i)">
-                                    Borrar
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <!-- table for email -->
+    <div
+      class="row col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center"
+    >
+      <div class="col">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>Correo</th>
+              <th>Tipo</th>
+              <th>Detalles</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="contactEmail">
+            <tr *ngFor="let phoneControl of getcontactEmailFormArray.controls; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                <input type="text" class="form-control" [formControlName]="i" placeholder="Correo {{i + 1}}"/>
+                
+                <small *ngIf="isFormatField(i)" class="text-danger"
+                  >El formato debe ser example@gmail.com</small
+                >
+                    <!-- <small *ngIf="getcontactEmailFormArray.controls[i].invalid && isFormatField('contactEmail')" class="text-danger">
+                    El formato debe ser example@gmail.com
+                  </small>  -->
 
-        <!-- table for phone -->
+              </td>
+              <td></td>
+              <td>
+                <button class="btn btn-danger" (click)="deleteEmail(i)">
+                  Borrar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-        <div class="row col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center">
-            <div class="col">
-                <table class="table table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Telefono</th>
-                            <th>Tipo</th>
-                            <th>Detalles</th>
-                        </tr>
-                    </thead>
-                    <tbody formArrayName="contactPhone">
-                        <tr *ngFor="
-                let phoneControl of getcontactPhoneFormArray.controls;
-                let i = index
-              ">
-                            <td>{{ i + 1 }}</td>
-                            <td>
-                                <!-- formphone -->
-                                <div *ngIf="selectedType === 'hause'" class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
-                                            <path
-                                                d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z" />
-                                        </svg>
-                                    </span>
-                                    <input  [formControlName]="i"
-                                        placeholder="Numero de telefono {{ i + 1 }}" type="number" class="form-control"
-                                        minlength="10" maxlength="10" />
-                                </div>
-                                <div   *ngIf="selectedType === 'phone'"  class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
-                                            <path
-                                                d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                                            <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-                                        </svg>
-                                    </span>
-                                    <input [formControlName]="i"
-                                        placeholder="Numero de telefono {{ i + 1 }}" type="number" class="form-control"
-                                        minlength="10" maxlength="10" />
-                                </div>
-                                <div *ngIf="selectedType === 'whatsapp'" class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
-                                            <path
-                                                d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
-                                        </svg>
-                                    </span>
-                                    <input  [formControlName]="i"
-                                        placeholder="Numero de telefono {{ i + 1 }}" type="number" class="form-control"
-                                        minlength="10" maxlength="10" />
-                                </div>
+    <!-- table for phone -->
 
-                                <br />
-                                <small *ngIf="isFormatField('contactPhone' + i)" class="text-danger">Formato incorrecto,
-                                    debe contener solo números, 10
-                                    digitos</small>
+    <div
+      class="row col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center"
+    >
+      <div class="col">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>Telefono</th>
+              <th>Tipo</th>
+              <th>Detalles</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="contactPhone">
+            <tr
+              *ngFor="let phoneControl of getcontactPhoneFormArray.controls;let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                <!-- formphone -->
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-house-door"
+                      viewBox="0 0 16 16">
+                      <path
+                        d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"
+                      />
+                    </svg>
+                  </span>
+                  <input
+                    [formControlName]="i"
+                    placeholder="Numero de telefono {{ i + 1 }}"
+                    type="number"
+                    class="form-control"
+                    
+                  />
+                </div>
+                <br />
+                <!-- <small *ngIf="isFormatField('contactPhone' + i)" class="text-danger" >Formato incorrecto, debe contener solo números, 10 digitos</small> -->
 
-                                <!-- <input type="text" class="form-control" [formControlName]="i" /> -->
-                            </td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-danger" (click)="deletePhone(i)">
-                                    Borrar
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- <button class="btn btn-primary mt-3 mb-5 btn-block" type="button" (click)="addPhone()">
+                <!-- <input type="text" class="form-control" [formControlName]="i" /> -->
+              </td>
+              <td></td>
+              <td>
+                <button class="btn btn-danger" (click)="deletePhone(i)">
+                  Borrar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <button class="btn btn-primary mt-3 mb-5 btn-block" type="button" (click)="addPhone()">
                 + Agregar Telefono
             </button> -->
-            </div>
-        </div>
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3 mt-5">
-            <button class="btn btn-outline-danger me-md-2" type="button" [routerLink]="['/list-contact']"
-                routerLinkActive="router-link-active">
-                Cancelar
-            </button>
-            <button class="btn btn-primary" type="button" (click)="saveContact()">
-                Guardar
-            </button>
-        </div>
+      </div>
     </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3 mt-5">
+      <button
+        class="btn btn-outline-danger me-md-2"
+        type="button"
+        [routerLink]="['/list-contact']"
+        routerLinkActive="router-link-active"
+      >
+        Cancelar
+      </button>
+      <button class="btn btn-primary" type="button" (click)="saveContact()">
+        Guardar
+      </button>
+    </div>
+  </div>
 </form>
 
 <hr />
