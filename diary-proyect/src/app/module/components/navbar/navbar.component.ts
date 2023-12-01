@@ -1,7 +1,7 @@
 import { Component ,EventEmitter,Input, Output, } from '@angular/core';
 import { DialogConfirmationComponent } from '../dialog-confirmation/dialog-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthLoginService } from '../../services/auth-login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class NavbarComponent {
   @Output() onToggleMenu: EventEmitter<any> = new EventEmitter();
   public sidebarItems = [
-    { label: 'Contactos', icon: 'user', url: '/list-contact' },
+    { label: 'Contactos', icon: 'group', url: '/list-contact' },
     { label: 'Acerca de...', icon: 'settings', url: '/about'},
   ];
 
@@ -36,11 +36,18 @@ constructor(
   private router:Router,
   private authService: AuthLoginService,
   private snackbar:MatSnackBar,
+  private activatedRoute:ActivatedRoute,
+  private _authService:AuthLoginService,
 
-){}
+){
+  this.activatedRoute.params.subscribe(params =>{
+    this.dataUser = this._authService.getUserLogeado();
+    console.log(params['code']);
+    
+  })
+}
 
 ngOnInit(): void {
-
   this.getContact(); 
   this.getNumberContacts = Number(localStorage.getItem('contact'));
   // console.log(  this.getNumberContacts = Number(localStorage.getItem('contact'))  );

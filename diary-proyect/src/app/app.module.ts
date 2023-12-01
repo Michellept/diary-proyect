@@ -9,10 +9,12 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './module/pages/profile/pages/profile.component';
 
 @NgModule({
   declarations: [
-    AppComponent ],
+    AppComponent,
+    ProfileComponent ],
   imports: [
     BrowserModule,
     AppRoutingModule,

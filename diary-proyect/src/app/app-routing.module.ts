@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProfileModule } from './module/pages/profile/profile.module';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path:'',
     loadChildren:()=> import('./module/pages/contact/contact.module').then(m=>m.ContactModule)
+  },
+  {
+    path:'',
+    loadChildren:()=> import('./module/pages/profile/profile.module').then(m=>m.ProfileModule)
   }
 ];
 
