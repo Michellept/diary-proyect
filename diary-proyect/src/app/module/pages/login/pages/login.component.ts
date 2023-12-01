@@ -17,9 +17,7 @@ import { authInterface } from 'src/app/module/services/interface/auth-interface'
 })
 export class LoginComponent implements OnInit {
 
-   
-
-  constructor(
+   constructor(
     private fb: FormBuilder,
     private router: Router, 
     private snackBar: MatSnackBar,
@@ -36,8 +34,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     
   }
-
-
   async onLogin() {
 
     console.log(this.formLogin.value);
@@ -57,6 +53,8 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/list-contact']);
             this.snackBar.open(
               'Usuario autenticado exitosamente',
+              'Aceptar',
+              { duration: 10 * 1000, panelClass: ['green-snackbar'] }
             )
           }
         },
