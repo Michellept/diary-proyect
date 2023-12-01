@@ -40,6 +40,7 @@ constructor(
 ){}
 
 ngOnInit(): void {
+
   this.getContact(); 
   this.getNumberContacts = Number(localStorage.getItem('contact'));
   // console.log(  this.getNumberContacts = Number(localStorage.getItem('contact'))  );
