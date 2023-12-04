@@ -5,6 +5,7 @@ import { DialogConfirmationService } from '../../../../components/service/dialog
 import { DialogLoadingService } from 'src/app/module/components/service/dialog-loading.service';
 import { DialogConfirmationComponent } from '../../../../components/dialog-confirmation/dialog-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-list-contact',
@@ -13,6 +14,12 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ListContactComponent implements OnInit {
   @Output() allContactChance = new EventEmitter<number>();
+
+  private numContacts = new BehaviorSubject<number>(0);
+  
+  numContacts$=this.numContacts.asObservable();
+
+
 
   public dataTable = [];
   offset = 1;
@@ -53,7 +60,7 @@ export class ListContactComponent implements OnInit {
       searchTerm: this.searchTerm,
     };
 
-    this.ContactService.getAllContacts(data).subscribe({
+    this.ContactService.getAllContacts(data).subscribe({ 
       next: (response) => {
         if (response.succeed) {
           console.log(response);
@@ -73,15 +80,15 @@ export class ListContactComponent implements OnInit {
           const data = response.result.list;
           this.dataTable = data;
 
-          const end =
-          (data.length + this.offset) / this.limit +
-          this.limit -
-          this.allContact;
-          this.dataTable = data.result.list.splice(0, this.limit - end);
+          // const end =
+          // (data.length + this.offset) / this.limit +
+          // this.limit -
+          // this.allContact;
+          // this.dataTable = data.result.list.splice(0, this.limit - end);
 
-          this.totalPages = Math.ceil(this.allContact / this.limit);
-          this.currentPage = this.offset / this.limit + 1;
-          this.allContactChance.emit(this.allContact);
+          // this.totalPages = Math.ceil(this.allContact / this.limit);
+          // this.currentPage = this.offset / this.limit + 1;
+          // this.allContactChance.emit(this.allContact);
         }
       },
       error: (err) => {
@@ -96,7 +103,6 @@ export class ListContactComponent implements OnInit {
   pageChanged(event: any): void {
     this.limit = event.pageSize;
     this.currentPage = event.pageIndex + 1;
-    console.log(event.pageIndex + 1);
     this.getAllContacts(this.allContact, this.searchTerm);
   }
   deleteContactId(id: number) {
@@ -135,7 +141,7 @@ export class ListContactComponent implements OnInit {
 
             //finish the next and error...
             complete: () => {
-              this.getAllContacts(1, '');
+              this.getAllContacts(-1, '');
               this.allContactChance.emit(this.allContact);
               this.dialogLoading.finish();
             },

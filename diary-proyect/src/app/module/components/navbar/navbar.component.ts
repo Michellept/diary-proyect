@@ -12,10 +12,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class NavbarComponent {
   @Output() onToggleMenu: EventEmitter<any> = new EventEmitter();
+
   public sidebarItems = [
     { label: 'Contactos', icon: 'group', url: '/list-contact' },
     { label: 'Acerca de...', icon: 'settings', url: '/about'},
   ];
+
 
 
   public dataUser : any;
@@ -43,16 +45,12 @@ constructor(
   this.activatedRoute.params.subscribe(params =>{
     this.dataUser = this._authService.getUserLogeado();
     console.log(params['code']);
-    
-  })
+    })
+  this.getNumberContacts = Number(localStorage.getItem('contact')?localStorage.getItem('contact'):0);
 }
 
 ngOnInit(): void {
   this.getContact(); 
-  this.getNumberContacts = Number(localStorage.getItem('contact'));
-  // console.log(  this.getNumberContacts = Number(localStorage.getItem('contact'))  );
-  
-
 }
 openModule(module: any) {
   this.onToggleMenu.emit(true);

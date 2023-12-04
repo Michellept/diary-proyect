@@ -1,11 +1,4 @@
 
-<form class="form" [formGroup]="formRegister">
-    <label>Data</label>
-    <input class="form-control" formControlName ="nameField" />
-    
+<form class="form" [formGroup]="form">
+    <input class="form-control" [formControlName] ="controlName" />
 </form>
-<!-- <code>
-    <pre>
-        {{nameField | json}}
-    </pre>
-</code> -->

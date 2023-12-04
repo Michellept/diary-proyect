@@ -5,6 +5,7 @@ import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './pages/login.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { ComponentsModule } from '../../components/components.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { BrowserModule } from '@angular/platform-browser';
     LoginRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    ComponentsModule
   ]
 })
 export class LoginModule { }

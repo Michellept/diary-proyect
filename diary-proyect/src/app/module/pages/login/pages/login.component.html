@@ -4,25 +4,35 @@
       <span class="loader"></span>
       <form class="form" [formGroup]="formLogin">
         <label>Usuario</label>
-        <input
+        <!-- <input
         class="form-control"
           type="email"
           formControlName="authUser"
           required="required"
-        />
+        /> -->
+        <app-form
+        [form]="formLogin"
+        type="email"
+        controlName="authUser"
+        ></app-form>
         <small *ngIf="isValidField('authUser')" class="text-danger"
           >Este campos es obligatorio</small
         >
         <label>Contraseña</label>
 
-        <input
+        <!-- <input
         class="form-control"
           type="password"
           formControlName="authPassword"
           required="required"
 
-        />
+        /> -->
 
+        <app-form
+        [form]="formLogin"
+        type="password"
+        controlName="authPassword"
+        ></app-form>
         <small *ngIf="isValidField('authPassword')" class="text-danger"
           >Este campos es obligatorio</small
         >
@@ -31,6 +41,9 @@
         </button>
         <a class="link mt-3" routerLink="/register">Registrarse</a>
 
+
+   
+    
       </form>
     </div>
   </div>

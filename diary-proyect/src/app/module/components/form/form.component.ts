@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -8,10 +8,13 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class FormComponent implements OnInit {
 
-  formRegister!: FormGroup;
+@Input() form!: FormGroup;
+@Input() controlName!:string;
+
+
+
 
 constructor(private fb: FormBuilder) {
-  this.initForm();
 }
 
   ngOnInit(): void {
@@ -29,11 +32,6 @@ constructor(private fb: FormBuilder) {
   }
 
 
-  initForm(){
-    this.formRegister = this.fb.group({
-      nameField : ['', [Validators.required] ],
-    })
-  }
 
 
   // savePhone(){
