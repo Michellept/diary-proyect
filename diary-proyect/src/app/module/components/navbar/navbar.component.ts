@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthLoginService } from '../../services/auth-login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ContactService } from '../../services/contact.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +19,7 @@ export class NavbarComponent {
     { label: 'Acerca de...', icon: 'settings', url: '/about'},
   ];
 
+  counter =0;
 
 
   public dataUser : any;
@@ -40,6 +42,7 @@ constructor(
   private snackbar:MatSnackBar,
   private activatedRoute:ActivatedRoute,
   private _authService:AuthLoginService,
+  private contactService:ContactService,
 
 ){
   this.activatedRoute.params.subscribe(params =>{
@@ -50,6 +53,11 @@ constructor(
 }
 
 ngOnInit(): void {
+  this.contactService.numContacts$.subscribe(numContacts=>{
+  this.counter = numContacts;
+  console.log(this.counter);
+    
+  })
   this.getContact(); 
 }
 openModule(module: any) {

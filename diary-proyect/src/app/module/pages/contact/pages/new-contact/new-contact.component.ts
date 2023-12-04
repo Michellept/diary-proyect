@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { ContactService } from 'src/app/module/services/contact.service';
 
 @Component({
@@ -16,6 +17,12 @@ import { ContactService } from 'src/app/module/services/contact.service';
   styleUrls: ['./new-contact.component.scss'],
 })
 export class NewContactComponent implements OnInit {
+
+  private numContacts = new BehaviorSubject<number>(0);
+  numContacts$=this.numContacts.asObservable();
+  
+
+
   selectedType: string = ''; // Variable para almacenar el tipo seleccionado
 
   types = [{value:1, name: 'Casa' }, {value:2, name: 'Telefono' }, {value:3, name: 'Whatsapp' }];
@@ -74,12 +81,16 @@ export class NewContactComponent implements OnInit {
           console.log(response.succeed);
           console.log(modelRegister);
 
-          if (response.succeed === true) {
+          if (response.succeed) {
             this.snackbar.open('Usuario creado exitosamente', 'Aceptar', {
               duration: 10 * 1000,
               panelClass: ['green-snackbar'],
             });
             // this.router.navigate(['/list-contact']);
+
+            this.numContacts.next(this.numContacts.getValue() + 1);
+            console.log( this.numContacts.next(this.numContacts.getValue() + 1)  );
+            
           }
         },
         error: (err) => {

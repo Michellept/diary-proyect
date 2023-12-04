@@ -13,10 +13,8 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./list-contact.component.scss'],
 })
 export class ListContactComponent implements OnInit {
-  @Output() allContactChance = new EventEmitter<number>();
 
   private numContacts = new BehaviorSubject<number>(0);
-  
   numContacts$=this.numContacts.asObservable();
 
 
@@ -25,9 +23,7 @@ export class ListContactComponent implements OnInit {
   offset = 1;
   limit = 10;
   searchTerm = '';
-  allContact = localStorage.getItem('contact')
-    ? Number(localStorage.getItem('contact'))
-    : 0;
+  allContact = 0;
   countContact = 0;
   currentPage = 1;
   totalPages = 0;
@@ -69,26 +65,12 @@ export class ListContactComponent implements OnInit {
 
           this.allContact = response.result.count;
           this.allContact = this.allContact + this.countContact;
+          
           localStorage.setItem('contact', this.allContact.toString());
 
-
-          // console.log(localStorage.setItem('contact', this.allContact.toString())          );
-
           console.log('allContact', this.allContact);
-
-          // console.log((this.dataTable = response.result.count));
           const data = response.result.list;
           this.dataTable = data;
-
-          // const end =
-          // (data.length + this.offset) / this.limit +
-          // this.limit -
-          // this.allContact;
-          // this.dataTable = data.result.list.splice(0, this.limit - end);
-
-          // this.totalPages = Math.ceil(this.allContact / this.limit);
-          // this.currentPage = this.offset / this.limit + 1;
-          // this.allContactChance.emit(this.allContact);
         }
       },
       error: (err) => {
@@ -115,7 +97,7 @@ export class ListContactComponent implements OnInit {
         message: '¿Estas seguro de eliminar este contacto?',
       },
     });
-
+  
     if (dialog) {
       dialog.afterClosed().subscribe((confirmation) => {
         if (confirmation) {
@@ -142,7 +124,6 @@ export class ListContactComponent implements OnInit {
             //finish the next and error...
             complete: () => {
               this.getAllContacts(-1, '');
-              this.allContactChance.emit(this.allContact);
               this.dialogLoading.finish();
             },
           });

@@ -1,6 +1,8 @@
 <nav class="navbar navbar-dark bg-dark  mb-3">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Agenda Personal</a>
+    <h5 class="text-white">Numero de contactos: {{this.counter }}</h5>
+
     <!-- btn open offcanvas -->
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -40,9 +42,7 @@
       </div> 
   
 
-      <div class="offcanvas-footer m-5" >
-        <h3>Numero de contactos: {{this.getNumberContacts}}</h3>
- 
+      <div class="offcanvas-footer m-5" > 
         <div class="d-flex mt-3 justify-content-end m-5"   >
 
           <button class="btn btn-lg btn-outline-danger" type="button" (click)="logOut()">
