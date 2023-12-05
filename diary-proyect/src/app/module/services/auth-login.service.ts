@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
 import { authInterface } from './interface/auth-interface';
 
@@ -10,13 +10,19 @@ import { authInterface } from './interface/auth-interface';
 export class AuthLoginService {
 
   public url = environment.URL_API;
+  public recurrentUser = {};
 
   constructor(
   private httpclient: HttpClient)
-   {}
+  {
+  }
   headers = new HttpHeaders().set('x-api-key', '7802c4c0');
 
   logIn(credentials : authInterface): Observable<any> {
+    
+    // this.recurrentUser = JSON.parse(localStorage.getItem('currentUser')!)
+    // console.log(this.recurrentUser);
+    
     const myObjCredentials  = {
       authUser: credentials.authUser,
       authPassword: credentials.authPassword,

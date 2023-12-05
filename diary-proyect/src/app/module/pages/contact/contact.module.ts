@@ -8,12 +8,14 @@ import { RouterModule } from '@angular/router';
 import { ComponentsModule } from '../../components/components.module';
 import { MaterialModule } from '../../../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DetailsContactComponent } from './pages/details-contact/details-contact/details-contact.component';
 
 
 @NgModule({
   declarations: [
     ListContactComponent,
     NewContactComponent,
+    DetailsContactComponent,
   ],
   imports: [
     CommonModule,

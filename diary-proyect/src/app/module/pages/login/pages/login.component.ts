@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
 
   FormBuilder,
@@ -16,7 +16,7 @@ import { authInterface } from 'src/app/module/services/interface/auth-interface'
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  @Input() isLogged : boolean = false;
    constructor(
     private fb: FormBuilder,
     private router: Router, 
@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
           console.log(response);
           
           if (response.succeed) {
+            this.isLogged = true;
             this.router.navigate(['/list-contact']);
             this.snackBar.open(
               'Usuario autenticado exitosamente',

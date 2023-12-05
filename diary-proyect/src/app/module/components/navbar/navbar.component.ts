@@ -21,6 +21,7 @@ export class NavbarComponent {
 
   counter =0;
 
+  
 
   public dataUser : any;
   // dataUser: any = {
@@ -45,11 +46,8 @@ constructor(
   private contactService:ContactService,
 
 ){
-  this.activatedRoute.params.subscribe(params =>{
-    this.dataUser = this._authService.getUserLogeado();
-    console.log(params['code']);
-    })
-  this.getNumberContacts = Number(localStorage.getItem('contact')?localStorage.getItem('contact'):0);
+
+  
 }
 
 ngOnInit(): void {
@@ -70,6 +68,7 @@ getContact() {
     next: (response) => {
       console.log('RESPONSE',response);
       if (response.succeed) {
+
         console.log(response);
         this.dataUser = response.result.user;
 
