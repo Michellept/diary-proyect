@@ -5,6 +5,7 @@ import { RegisterRoutingModule } from './register-routing.module';
 import { RegisterComponent } from './page/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ComponentsModule } from '../../components/components.module';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RegisterRoutingModule,
     FormsModule,
-    ReactiveFormsModule,RouterModule
+    ReactiveFormsModule,
+    RouterModule,
+    ComponentsModule,
   ]
 })
 export class RegisterModule { }

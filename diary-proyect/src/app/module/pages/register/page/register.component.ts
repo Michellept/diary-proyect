@@ -56,7 +56,7 @@ onRegister(){
             duration: 10 * 1000,
             panelClass: ['green-snackbar']
           })
-          this.router.navigate(['/list-contact']);
+          this.router.navigate(['/auth/login']);
 
         }
         

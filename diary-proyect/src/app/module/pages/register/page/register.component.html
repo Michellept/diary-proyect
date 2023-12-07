@@ -17,30 +17,40 @@
       </svg>
       <form class="form" [formGroup]="formRegister">
         <label>Nombre</label>
-        <input class="form-control" type="name" formControlName="userName" />
+        <app-form
+          [form]="formRegister"
+          type="email"
+          controlName="userName"
+        ></app-form>
         <small *ngIf="isValidField('userName')" class="text-danger"
           >Este campos es obligatorio</small
         >
 
         <label>Correo</label>
-        <input class="form-control" type="email" formControlName="userEmail" />
+        <app-form
+          [form]="formRegister"
+          type="email"
+          controlName="userEmail"
+        ></app-form>
         <small *ngIf="isValidField('userEmail')" class="text-danger"
           >Este campos es obligatorio</small
         >
 
         <label>Contraseña</label>
 
-        <input
-          class="form-control"
-          type="text"
-          formControlName="userPassword"
-        />
+        <div class="col">
+          <input
+            class="form-control"
+            type="password"
+            formControlName="userPassword"
+          />
+        </div>
 
         <small *ngIf="isValidField('userPassword')" class="text-danger"
           >Este campos es obligatorio</small
         >
 
-        <div class="input-group mt-3">
+        <div class="col input-group mt-3">
           <input type="file" class="form-control" formControlName="userPhoto" />
         </div>
 
@@ -53,11 +63,12 @@
         </button>
 
         <button
-        class="btn btn-secondary mt-2"
-        type="button"
-        [routerLink]="['/auth/login']" >
-        Cancelar
-      </button>
+          class="btn btn-secondary mt-2"
+          type="button"
+          [routerLink]="['/auth/login']"
+        >
+          Cancelar
+        </button>
       </form>
     </div>
   </div>
