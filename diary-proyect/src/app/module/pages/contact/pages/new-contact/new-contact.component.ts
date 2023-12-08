@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ComponentRef,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -9,7 +15,9 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { EmaiDynamicComponent } from 'src/app/module/components/emai-dynamic/emai-dynamic.component';
 import { ContactService } from 'src/app/module/services/contact.service';
+import { DirectivesDirective } from 'src/app/shared/directives.directive';
 
 @Component({
   selector: 'app-new-contact',
@@ -17,15 +25,20 @@ import { ContactService } from 'src/app/module/services/contact.service';
   styleUrls: ['./new-contact.component.scss'],
 })
 export class NewContactComponent implements OnInit {
-
   private numContacts = new BehaviorSubject<number>(0);
-  numContacts$=this.numContacts.asObservable();
-  
+  numContacts$ = this.numContacts.asObservable();
+
+  @ViewChild(DirectivesDirective, { read: ViewContainerRef })
+  public containerDynamicEmail!: ViewContainerRef; // variable para guardar mi input de email
+  private containerEmail!: ComponentRef<EmaiDynamicComponent>;
 
 
   selectedType: string = ''; // Variable para almacenar el tipo seleccionado
-
-  types = [{value:1, name: 'Casa' }, {value:2, name: 'Telefono' }, {value:3, name: 'Whatsapp' }];
+  types = [
+    { value: 1, name: 'Casa' },
+    { value: 2, name: 'Telefono' },
+    { value: 3, name: 'Whatsapp' },
+  ];
 
   formRegister!: FormGroup;
   contactPhone = this.fb.array([]);
@@ -55,8 +68,7 @@ export class NewContactComponent implements OnInit {
       contactBirthday: ['', Validators.required],
       contactPhoto: [''],
       contactNotes: [''],
-      contactPhone: this.fb.array([
-      ]), // También puedes aplicar Validators.required si el FormArray no debe estar vacío
+      contactPhone: this.fb.array([]), // También puedes aplicar Validators.required si el FormArray no debe estar vacío
     });
   }
 
@@ -73,8 +85,6 @@ export class NewContactComponent implements OnInit {
       contactPhone: this.formRegister.value.contactPhone,
     };
 
-    console.log(modelRegister);
-
     if (this.formRegister.valid) {
       this.createcontactService.createContact(modelRegister).subscribe({
         next: (response) => {
@@ -89,8 +99,7 @@ export class NewContactComponent implements OnInit {
             // this.router.navigate(['/list-contact']);
 
             this.numContacts.next(this.numContacts.getValue() + 1);
-            console.log( this.numContacts.next(this.numContacts.getValue() + 1)  );
-            
+            console.log(this.numContacts.next(this.numContacts.getValue() + 1));
           }
         },
         error: (err) => {
@@ -112,12 +121,28 @@ export class NewContactComponent implements OnInit {
     }
   }
 
+  createComponentEmail() {
+    this.containerEmail =
+      this.containerDynamicEmail.createComponent(EmaiDynamicComponent);
+  }
+  deleteComponentEmail() {
+    if (this.containerEmail) {
+      this.containerEmail.destroy();
+    }
+  }
+
+
+
+
+
+
+
   onTypePhone(event: Event, typeSelected: number) {
     this.selectedType = (event.target as HTMLInputElement).value;
     const recurrent = this.getcontactPhoneFormArray.at(typeSelected);
 
     recurrent.get('typePhone')?.setValue(this.selectedType);
-    
+
     console.log(recurrent);
   }
 
@@ -136,16 +161,16 @@ export class NewContactComponent implements OnInit {
     this.getcontactPhoneFormArray.push(this.fb.control(''));
   }
 
-  deleteEmail(i: number) {
-    this.getcontactEmailFormArray.removeAt(i);
-  }
-
   addEmail() {
     this.getcontactEmailFormArray.push(
       this.fb.control('', [
         Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
       ])
     );
+  }
+
+  deleteEmail(i:number){
+    this.getcontactEmailFormArray.removeAt(i);
   }
 
   isValidField(field: string): boolean | null {

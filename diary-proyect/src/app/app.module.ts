@@ -7,9 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from './material/material.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from './module/components/components.module';
+import { DirectivesDirective } from './shared/directives.directive';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -26,11 +28,17 @@ import { ComponentsModule } from './module/components/components.module';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ComponentsModule
-  
+    ComponentsModule,
+    SharedModule  
 
   ],
-  providers: [],
+  providers: [
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: TimeInterceptor,
+    //   multi: true
+    // }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
