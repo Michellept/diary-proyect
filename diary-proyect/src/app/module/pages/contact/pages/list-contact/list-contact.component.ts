@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContactService } from 'src/app/module/services/contact.service';
 import { DialogConfirmationService } from '../../../../components/service/dialog-confirmation.service';
@@ -6,6 +6,7 @@ import { DialogLoadingService } from 'src/app/module/components/service/dialog-l
 import { DialogConfirmationComponent } from '../../../../components/dialog-confirmation/dialog-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-contact',
@@ -32,7 +33,8 @@ export class ListContactComponent implements OnInit {
     private ContactService: ContactService,
     private snackbar: MatSnackBar,
     private dialogLoading: DialogLoadingService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router:Router,
   ) {}
 
   ngOnInit(): void {
@@ -60,15 +62,11 @@ export class ListContactComponent implements OnInit {
       next: (response) => {
         if (response.succeed) {
           console.log(response);
-          console.log((this.allContact = response.result));
-          console.log((this.allContact = this.allContact + this.countContact));
-
           this.allContact = response.result.count;
           this.allContact = this.allContact + this.countContact;
           
           localStorage.setItem('contact', this.allContact.toString());
 
-          console.log('allContact', this.allContact);
           const data = response.result.list;
           this.dataTable = data;
         }
@@ -130,5 +128,14 @@ export class ListContactComponent implements OnInit {
         }
       });
     }
+
+
+  }
+
+  navEditContact(contactToEditId :any){
+    this.router.navigate(['details-contact',contactToEditId]),{
+      state:{ContactToEdit : contactToEditId }
+    }
+    
   }
 }

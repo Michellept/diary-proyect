@@ -43,13 +43,15 @@ export class NewContactComponent implements OnInit {
   formRegister!: FormGroup;
   contactPhone = this.fb.array([]);
   contactEmail = this.fb.array([]);
+  public contactToEditId: any;
 
   constructor(
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private createcontactService: ContactService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.formRegister = this.fb.group({

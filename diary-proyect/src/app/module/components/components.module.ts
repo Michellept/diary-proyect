@@ -10,6 +10,7 @@ import { DialogLoadingComponent } from './dialog-loading/dialog-loading.componen
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EmaiDynamicComponent } from './emai-dynamic/emai-dynamic.component';
+import { PhoneDynamicComponent } from './phone-dynamic/phone-dynamic.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { EmaiDynamicComponent } from './emai-dynamic/emai-dynamic.component';
     DialogConfirmationComponent,
     DialogLoadingComponent,
     EmaiDynamicComponent,
+    PhoneDynamicComponent,
   ],
   imports: [
     CommonModule,
