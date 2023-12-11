@@ -145,7 +145,20 @@ export class DetailsContactComponent implements OnInit {
       this.formEditContact.markAllAsTouched();
     }
   }
+  get getcontactEmailFormArray() {
+    return this.formEditContact.get('contactEmails') as FormArray;
+  }
+  addEmail() {
+    this.getcontactEmailFormArray.push(
+      this.fb.control('', [
+        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+      ])
+    );
+  }
 
+  deleteEmail(i:number){
+    this.getcontactEmailFormArray.removeAt(i);
+  }
   isValidField(field: string): boolean | null {
     const control = this.formEditContact.controls[field];
     return control && control.invalid && control.touched;
