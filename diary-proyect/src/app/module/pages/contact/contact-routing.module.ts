@@ -14,7 +14,9 @@ const routes: Routes = [
     component:NewContactComponent,
   },
   {
-    path:'details-contact/:id',
+    path:'details-contact'
+    
+    ,
     component:DetailsContactComponent,
   },
 ];

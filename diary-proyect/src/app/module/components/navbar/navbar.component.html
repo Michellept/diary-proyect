@@ -1,59 +1,110 @@
-<nav  class="navbar navbar-dark bg-dark  mb-3">
+<nav class="navbar navbar-dark bg-dark mb-3">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Agenda Personal</a>
-    <h5 class="text-white">Numero de contactos: {{this.counter }}</h5>
+    <h5 class="text-white">Numero de contactos: {{ this.counter }}</h5>
 
     <!-- btn open offcanvas -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar"
+      aria-controls="offcanvasNavbar"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div
+      class="offcanvas offcanvas-end"
+      tabindex="-1"
+      id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel"
+    >
       <div class="offcanvas-header">
-        <h3 class="offcanvas-title" id="offcanvasNavbarLabel">Configuraciónes</h3>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <h3 class="offcanvas-title" id="offcanvasNavbarLabel">
+          Configuraciónes
+        </h3>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
       </div>
 
-      <!-- body off canvas -->     
+      <!-- body off canvas -->
       <div class="offcanvas-body">
-        <a routerLink="/" >
-          <div class="logo-container p-3" fxLayout="column" fxLayoutAlign="center center" 
-            style="cursor: pointer;">
-            <img class="rounded" style="width: 30%;" src="{{dataUser.userPhoto}}" alt="user-photo">
-          </div>
-        </a>
 
-        <div>
-          <li>
-            {{dataUser.userName}} 
-          </li>
-
-    
+        <div class="d-flex flex-column _mat-animation-noopable align-content-center text-center  ">
+          <div
+          class="logo-container p-3"
+          fxLayout="column"
+        >
+          <img
+            class="rounded"
+            style="width: 10%"
+            src="{{ dataUser.userPhoto }}"
+            alt="user-photo"
+          />
+          <p>
+            {{ dataUser.userName }}
+          </p>
         </div>
-        
-        <div>
-          <button mat-button style="height: 50px; width:350px;" *ngFor="let module of sidebarItems" fxLayout="row" fxLayoutAlign="start center" [routerLink]="module.url" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: false}" (click)="openModule(module)">
-            <mat-icon class="btn-icons-menu" style=" size: 10px;   width:10% ">{{module.icon}}</mat-icon>
-            <p style="font-size: 20px;"><strong>{{module.label}} </strong></p>
+
+       
+        </div>
+
+        <div class="mt-5 flex justify-center flex-grow">
+          <button
+            mat-button
+            class="mat-animation-noopable"
+            type="button"
+            style="width: 100%"
+            *ngFor="let module of sidebarItems"
+            [routerLink]="module.url"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: false }"
+            (click)="openModule(module)"
+          >
+            <mat-icon class="btn-icons-menu" style="size: 10px; width: 10%">{{
+              module.icon
+            }}</mat-icon>
+            <p style="font-size: 20px">
+              <strong>{{ module.label }} </strong>
+            </p>
           </button>
         </div>
-        
-      </div> 
-  
+      </div>
 
-      <div class="offcanvas-footer m-5" > 
-        <div class="d-flex mt-3 justify-content-end m-5"   >
-
-          <button class="btn btn-lg btn-outline-danger" type="button" (click)="logOut()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-left " viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
-              <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+      <div class="offcanvas-footer m-5">
+        <div class="d-flex mt-3 justify-content-end m-5">
+          <button
+            class="btn btn-lg btn-outline-danger"
+            type="button"
+            (click)="logOut()"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              fill="currentColor"
+              class="bi bi-box-arrow-left"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"
+              />
             </svg>
-            Cerrar Sesion</button>
+            Cerrar Sesion
+          </button>
         </div>
       </div>
     </div>
-    
   </div>
 </nav>

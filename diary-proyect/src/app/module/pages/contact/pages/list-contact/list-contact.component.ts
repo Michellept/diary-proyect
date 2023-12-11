@@ -132,10 +132,18 @@ export class ListContactComponent implements OnInit {
 
   }
 
-  navEditContact(contactToEditId :any){
-    this.router.navigate(['details-contact',contactToEditId]),{
-      state:{ContactToEdit : contactToEditId }
-    }
+  navEditContact(id: number) {
+    this.router.navigate(['/details-contact'], {
+      state: { ContactToEdit: id }
+    });
     
   }
-}
+  // onButtonClick(contactId: number) {
+  //   if (typeof contactId === 'number' && !isNaN(contactId)) {
+  //     console.log(contactId);
+  //     this.navEditContact(contactId);
+  //   } else {
+  //     console.error('El valor de contactId no es un número válido.');
+  //   }
+  // }
+}  

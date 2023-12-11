@@ -123,17 +123,26 @@ export class NewContactComponent implements OnInit {
     }
   }
 
+
   createComponentEmail() {
-    this.containerEmail =
+
+      this.containerEmail =
       this.containerDynamicEmail.createComponent(EmaiDynamicComponent);
+
+      this.count = this.count ? this.count + 1 : 1;
+      console.log(this.count);
+      
+    
+
   }
   deleteComponentEmail() {
-    if (this.containerEmail) {
+    if (this.containerEmail ) {
       this.containerEmail.destroy();
+      this.count = this.count ? this.count - 1 : 0;
     }
   }
 
-
+public count?: number;
 
 
 
