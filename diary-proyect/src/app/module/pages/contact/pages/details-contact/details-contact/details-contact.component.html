@@ -68,14 +68,22 @@
           <small *ngIf="isValidField('contactNotes')" class="text-danger"
             >Este campos es obligatorio</small
           >
+          
+          <label class="form-label mt-2">Cumpleaños</label>
+          <input
+            class="form-control"
+            type="date"
+            formControlName="contactBirthday"
+          />
+          <small *ngIf="isValidField('contactBirthday')" class="text-danger"
+            >Este campos es obligatorio</small
+          >
 
           <!-- email -->
-          <div
-            class="col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center"
-          >
+          <div class="col-12 mt-3 mb-3 animate__animated animate__fadeIn d-flex justify-content-center" >
             <div class="col">
           <div class="d-flex justify-content-between">
-            <h3>Correos</h3>
+            <h2>Correos</h2>
             <button type="button" class="btn btn-outline-info" (click)="addEmail()">Agregar correo</button>
           </div>
               <hr>
@@ -86,7 +94,7 @@
                     let i = index
                   "
                 >
-                  <label class="form-label mt-2">Correo {{ i + 1 }}</label>
+                  <!-- <label class="form-label mt-3 ">Correo {{ i + 1 }}</label> -->
 
                   <div class="input-group mt-3">
                     <span class="input-group-text" id="basic-addon1">
@@ -125,16 +133,6 @@
               </div>
             </div>
           </div>
-
-          <label class="form-label mt-2">Cumpleaños</label>
-          <input
-            class="form-control"
-            type="date"
-            formControlName="contactBirthday"
-          />
-          <small *ngIf="isValidField('contactBirthday')" class="text-danger"
-            >Este campos es obligatorio</small
-          >
           <!-- 
 
         <label class="form-label mt-2">Correos</label>

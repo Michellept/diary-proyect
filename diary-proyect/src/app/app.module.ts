@@ -12,10 +12,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from './module/components/components.module';
 import { DirectivesDirective } from './shared/directives.directive';
 import { SharedModule } from './shared/shared.module';
+import { TagDialogComponent } from './module/components/tag-dialog/tag-dialog.component';
+import { HeaderInterceptor } from './interceptors/header.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
+    TagDialogComponent,
     
   ],
   imports: [
@@ -33,11 +36,11 @@ import { SharedModule } from './shared/shared.module';
 
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: TimeInterceptor,
-    //   multi: true
-    // }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HeaderInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

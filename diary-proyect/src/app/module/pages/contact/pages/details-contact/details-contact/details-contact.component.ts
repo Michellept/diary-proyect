@@ -7,6 +7,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { emailInterface } from 'src/app/module/services/interface/email-interface';
 import { tagInterface } from 'src/app/module/services/interface/tags-interface';
 import { phoneInterface } from 'src/app/module/services/interface/phone-interface';
+import { TagDialogComponent } from 'src/app/module/components/tag-dialog/tag-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-details-contact',
@@ -94,18 +96,17 @@ export class DetailsContactComponent implements OnInit {
       contactFirstName: this.formEditContact.value.contactFirstName,
       contactLastName: this.formEditContact.value.contactLastName,
       contactPhones: this.formEditContact.value.contactPhones,
-      // contactEmails: this.formEditContact.value.contactEmails,
+      contactEmails: this.formEditContact.value.contactEmails,
+      contactTags: this.formEditContact.value.contactTags,
       contactNotes: this.formEditContact.value.contactNotes,
       contactPhoto: this.formEditContact.value.contactPhoto,
       contactAlias: this.formEditContact.value.contactAlias,
       contactBirthday: this.formEditContact.value.contactBirthday,
       contactCompany: this.formEditContact.value.contactCompany,
     };
-
+console.log('model', modelUpdate);
     //     this.contactEmails = this.formEditContact.get('contactEmails') as FormArray;
-
     // console.log(    this.contactEmails = this.formEditContact.get('contactEmails') as FormArray);
-
     if (this.formEditContact.valid) {
       const idContact = this.contactToData.contactId;
       this._contactService
@@ -145,6 +146,15 @@ export class DetailsContactComponent implements OnInit {
       this.formEditContact.markAllAsTouched();
     }
   }
+  addTag(newTag: string) {
+    const contactTagsArray = this.formEditContact.get('contactTags') as FormArray;
+  
+    if (newTag && !contactTagsArray.value.includes(newTag)) {
+      contactTagsArray.push(this.fb.control(newTag));
+    }
+  }
+  
+
   get getcontactEmailFormArray() {
     return this.formEditContact.get('contactEmails') as FormArray;
   }
@@ -159,6 +169,8 @@ export class DetailsContactComponent implements OnInit {
   deleteEmail(i:number){
     this.getcontactEmailFormArray.removeAt(i);
   }
+
+  
   isValidField(field: string): boolean | null {
     const control = this.formEditContact.controls[field];
     return control && control.invalid && control.touched;
