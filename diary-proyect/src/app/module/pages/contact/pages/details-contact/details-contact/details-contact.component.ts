@@ -1,9 +1,12 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ContactService } from 'src/app/module/services/contact.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { emailInterface } from 'src/app/module/services/interface/email-interface';
+import { tagInterface } from 'src/app/module/services/interface/tags-interface';
+import { phoneInterface } from 'src/app/module/services/interface/phone-interface';
 
 @Component({
   selector: 'app-details-contact',
@@ -16,7 +19,7 @@ export class DetailsContactComponent implements OnInit {
   contactToData: any;
   contactPhones = this.fb.array([]);
   contactEmails = this.fb.array([]);
-  contactNotes = this.fb.array([]);
+  contactTags = this.fb.array([]);
   constructor(
     private _snackBar: MatSnackBar,
     private fb: FormBuilder,
@@ -51,13 +54,38 @@ export class DetailsContactComponent implements OnInit {
     this.formEditContact.patchValue({
       contactFirstName: this.contactToData.contactFirstName,
       contactLastName: this.contactToData.contactLastName,
-      contactPhone: this.contactToData.contactPhone,
-      contactEmail: this.contactToData.contactEmail,
-      contactNotes: this.contactToData.contactNotes,
       contactPhoto: this.contactToData.contactPhoto,
       contactAlias: this.contactToData.contactAlias,
       contactBirthday: this.contactToData.contactBirthday,
       contactCompany: this.contactToData.contactCompany,
+      contactNotes: this.contactToData.contactNotes,
+    });
+
+    // emails array print
+    this.contactEmails = this.formEditContact.get('contactEmails') as FormArray;
+    this.contactEmails.clear();
+    this.contactToData.contactEmails.forEach((email: emailInterface) => {
+      this.contactEmails.push(
+        this.fb.control(email.emailValue, [
+          Validators.pattern(
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+          ),
+        ])
+      );
+    });
+
+    // tags array print
+    this.contactTags = this.formEditContact.get('contactTags') as FormArray;
+    this.contactTags.clear();
+    this.contactToData.contactTags.forEach((tag: tagInterface) => {
+      this.contactTags.push(this.fb.control(tag.tagValue, []));
+    });
+
+    // phone array print
+    this.contactPhones = this.formEditContact.get('contactPhones') as FormArray;
+    this.contactPhones.clear();
+    this.contactToData.contactPhones.forEach((tag: phoneInterface) => {
+      this.contactPhones.push(this.fb.control(tag.phoneValue, []));
     });
   }
 
@@ -65,14 +93,19 @@ export class DetailsContactComponent implements OnInit {
     const modelUpdate = {
       contactFirstName: this.formEditContact.value.contactFirstName,
       contactLastName: this.formEditContact.value.contactLastName,
-      contactPhone: this.formEditContact.value.contactPhone,
-      contactEmail: this.formEditContact.value.contactEmail,
+      contactPhones: this.formEditContact.value.contactPhones,
+      // contactEmails: this.formEditContact.value.contactEmails,
       contactNotes: this.formEditContact.value.contactNotes,
       contactPhoto: this.formEditContact.value.contactPhoto,
       contactAlias: this.formEditContact.value.contactAlias,
       contactBirthday: this.formEditContact.value.contactBirthday,
       contactCompany: this.formEditContact.value.contactCompany,
     };
+
+    //     this.contactEmails = this.formEditContact.get('contactEmails') as FormArray;
+
+    // console.log(    this.contactEmails = this.formEditContact.get('contactEmails') as FormArray);
+
     if (this.formEditContact.valid) {
       const idContact = this.contactToData.contactId;
       this._contactService
