@@ -9,6 +9,7 @@ import { tagInterface } from 'src/app/module/services/interface/tags-interface';
 import { phoneInterface } from 'src/app/module/services/interface/phone-interface';
 import { TagDialogComponent } from 'src/app/module/components/tag-dialog/tag-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogLoadingService } from 'src/app/module/components/service/dialog-loading.service';
 
 @Component({
   selector: 'app-details-contact',
@@ -26,7 +27,9 @@ export class DetailsContactComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private fb: FormBuilder,
     private routerActive: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialogLoading: DialogLoadingService,
+
   ) {
     this.contactToData =
       this.router.getCurrentNavigation()?.extras.state?.['ContactToEdit'];
@@ -108,6 +111,11 @@ console.log('model', modelUpdate);
     //     this.contactEmails = this.formEditContact.get('contactEmails') as FormArray;
     // console.log(    this.contactEmails = this.formEditContact.get('contactEmails') as FormArray);
     if (this.formEditContact.valid) {
+      this.dialogLoading.show(
+        'Espere por favor, Cargando...',
+        'Editando Contacto'
+      );
+  
       const idContact = this.contactToData.contactId;
       this._contactService
         .updateContact(idContact, modelUpdate)
@@ -140,7 +148,10 @@ console.log('model', modelUpdate);
             );
           },
 
-          complete: () => {},
+          complete: () => {
+            this.dialogLoading.finish();
+
+          },
         });
     } else {
       this.formEditContact.markAllAsTouched();

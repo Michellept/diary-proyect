@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { EmaiDynamicComponent } from 'src/app/module/components/emai-dynamic/emai-dynamic.component';
+import { DialogLoadingService } from 'src/app/module/components/service/dialog-loading.service';
 import { ContactService } from 'src/app/module/services/contact.service';
 import { DirectivesDirective } from 'src/app/shared/directives.directive';
 
@@ -49,7 +50,9 @@ export class NewContactComponent implements OnInit {
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private createcontactService: ContactService,
-    private router: Router
+    private router: Router,
+    private dialogLoading: DialogLoadingService,
+
   ) {
   }
 
@@ -88,6 +91,10 @@ export class NewContactComponent implements OnInit {
     };
 
     if (this.formRegister.valid) {
+      this.dialogLoading.show(
+        'Espere por favor, Cargando...',
+        'Creando Contacto'
+      );
       this.createcontactService.createContact(modelRegister).subscribe({
         next: (response) => {
           console.log(response.succeed);
@@ -110,6 +117,10 @@ export class NewContactComponent implements OnInit {
             duration: 10 * 1000,
             panelClass: ['red-snackbar'],
           });
+        },
+        complete: () => {
+          this.dialogLoading.finish();
+
         },
       });
     } else {
