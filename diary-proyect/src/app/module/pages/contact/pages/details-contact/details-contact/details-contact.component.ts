@@ -43,6 +43,7 @@ export class DetailsContactComponent implements OnInit {
       contactPhones: this.fb.array([]),
       contactEmails: this.fb.array([]),
       contactTags: this.fb.array([]),
+      newTag: [''],
       contactNotes: [''],
       contactPhoto: [''],
       contactAlias: [''],
@@ -161,15 +162,18 @@ console.log('model', modelUpdate);
   get getContactTagFormArray(){
     return this.formEditContact.get('contactTags') as FormArray;
   }
-  addTag(newTag: string) {
-    const contactTagsArray = this.formEditContact.get('contactTags') as FormArray;
-  
-    if (newTag && !contactTagsArray.value.includes(newTag)) {
-      contactTagsArray.push(this.fb.control(newTag));
-    }
-  }
+
   deleteTag(i:number){
     this.getContactTagFormArray.removeAt(i);
+  }
+
+  addTags() {
+    const nuevaEtiqueta = this.formEditContact.get('newTag')?.value;
+
+    if (nuevaEtiqueta && this.contactTags.length) {
+      this.getContactTagFormArray.push(this.fb.control(nuevaEtiqueta));
+      this.formEditContact.get('newTag')?.setValue('');
+    }
   }
 
 

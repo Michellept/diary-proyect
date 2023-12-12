@@ -19,12 +19,13 @@ img{
 
 
 .tags{
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-     gap: 5px;
+    border:none;
+    background-color: #9aa3a2;
+    border-radius: 5px;
+    color: white;
+    margin-top: 5%;
+    margin-bottom: 5%
+    
 
 }
 
@@ -32,4 +33,10 @@ img{
     background-color:transparent; 
     border-color: transparent;
     color: white;
+    margin-top: 5%;
+}
+.card{
+    padding: 3%;
+    border-radius: 32px;
+    
 }
