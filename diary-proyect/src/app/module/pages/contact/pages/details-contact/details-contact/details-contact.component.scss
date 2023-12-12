@@ -15,3 +15,21 @@ img{
 
     
 }
+
+
+
+.tags{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+     gap: 5px;
+
+}
+
+.input-tag{
+    background-color:transparent; 
+    border-color: transparent;
+    color: white;
+}

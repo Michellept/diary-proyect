@@ -157,6 +157,10 @@ console.log('model', modelUpdate);
       this.formEditContact.markAllAsTouched();
     }
   }
+
+  get getContactTagFormArray(){
+    return this.formEditContact.get('contactTags') as FormArray;
+  }
   addTag(newTag: string) {
     const contactTagsArray = this.formEditContact.get('contactTags') as FormArray;
   
@@ -164,7 +168,10 @@ console.log('model', modelUpdate);
       contactTagsArray.push(this.fb.control(newTag));
     }
   }
-  
+  deleteTag(i:number){
+    this.getContactTagFormArray.removeAt(i);
+  }
+
 
   get getcontactEmailFormArray() {
     return this.formEditContact.get('contactEmails') as FormArray;
