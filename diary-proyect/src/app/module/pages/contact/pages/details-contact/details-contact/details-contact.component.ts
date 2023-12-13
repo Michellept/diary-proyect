@@ -28,8 +28,7 @@ export class DetailsContactComponent implements OnInit {
     private fb: FormBuilder,
     private routerActive: ActivatedRoute,
     private router: Router,
-    private dialogLoading: DialogLoadingService,
-
+    private dialogLoading: DialogLoadingService
   ) {
     this.contactToData =
       this.router.getCurrentNavigation()?.extras.state?.['ContactToEdit'];
@@ -108,7 +107,7 @@ export class DetailsContactComponent implements OnInit {
       contactBirthday: this.formEditContact.value.contactBirthday,
       contactCompany: this.formEditContact.value.contactCompany,
     };
-console.log('model', modelUpdate);
+    console.log('model', modelUpdate);
     //     this.contactEmails = this.formEditContact.get('contactEmails') as FormArray;
     // console.log(    this.contactEmails = this.formEditContact.get('contactEmails') as FormArray);
     if (this.formEditContact.valid) {
@@ -116,7 +115,7 @@ console.log('model', modelUpdate);
         'Espere por favor, Cargando...',
         'Editando Contacto'
       );
-  
+
       const idContact = this.contactToData.contactId;
       this._contactService
         .updateContact(idContact, modelUpdate)
@@ -151,7 +150,6 @@ console.log('model', modelUpdate);
 
           complete: () => {
             this.dialogLoading.finish();
-
           },
         });
     } else {
@@ -159,23 +157,22 @@ console.log('model', modelUpdate);
     }
   }
 
-  get getContactTagFormArray(){
+  get getContactTagFormArray() {
     return this.formEditContact.get('contactTags') as FormArray;
   }
 
-  deleteTag(i:number){
+  deleteTag(i: number) {
     this.getContactTagFormArray.removeAt(i);
   }
 
   addTags() {
-    const nuevaEtiqueta = this.formEditContact.get('newTag')?.value;
+    const newTag = this.formEditContact.get('newTag')?.value;
 
-    if (nuevaEtiqueta && this.contactTags.length) {
-      this.getContactTagFormArray.push(this.fb.control(nuevaEtiqueta));
+    if (newTag && this.contactTags.length) {
+      this.getContactTagFormArray.push(this.fb.control(newTag));
       this.formEditContact.get('newTag')?.setValue('');
     }
   }
-
 
   get getcontactEmailFormArray() {
     return this.formEditContact.get('contactEmails') as FormArray;
@@ -188,11 +185,10 @@ console.log('model', modelUpdate);
     );
   }
 
-  deleteEmail(i:number){
+  deleteEmail(i: number) {
     this.getcontactEmailFormArray.removeAt(i);
   }
 
-  
   isValidField(field: string): boolean | null {
     const control = this.formEditContact.controls[field];
     return control && control.invalid && control.touched;

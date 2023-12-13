@@ -12,12 +12,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { EmaiDynamicComponent } from 'src/app/module/components/emai-dynamic/emai-dynamic.component';
 import { DialogLoadingService } from 'src/app/module/components/service/dialog-loading.service';
+import { TagsBottonSheetComponent } from 'src/app/module/components/tags-botton-sheet/tags-botton-sheet.component';
 import { ContactService } from 'src/app/module/services/contact.service';
+import { tagInterface } from 'src/app/module/services/interface/tags-interface';
 import { DirectivesDirective } from 'src/app/shared/directives.directive';
 
 @Component({
@@ -33,7 +36,6 @@ export class NewContactComponent implements OnInit {
   public containerDynamicEmail!: ViewContainerRef; // variable para guardar mi input de email
   private containerEmail!: ComponentRef<EmaiDynamicComponent>;
 
-
   selectedType: string = ''; // Variable para almacenar el tipo seleccionado
   types = [
     { value: 1, name: 'Casa' },
@@ -45,6 +47,9 @@ export class NewContactComponent implements OnInit {
   contactPhone = this.fb.array([]);
   contactEmail = this.fb.array([]);
   public contactToEditId: any;
+  contactTags = this.fb.array([]);
+  tagToLocalStorage: string[] = [];
+  tagSelected : string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -52,8 +57,13 @@ export class NewContactComponent implements OnInit {
     private createcontactService: ContactService,
     private router: Router,
     private dialogLoading: DialogLoadingService,
-
+    private _bottomSheet: MatBottomSheet
   ) {
+
+
+    // this.tagToLocalStorage = localStorage.getItem('tags');
+    // console.log("LocalStorageTag",this.tagToLocalStorage);
+    
   }
 
   ngOnInit(): void {
@@ -73,8 +83,27 @@ export class NewContactComponent implements OnInit {
       contactBirthday: ['', Validators.required],
       contactPhoto: [''],
       contactNotes: [''],
+      contactTags: this.fb.array([]),
+      newTag: [''],
       contactPhone: this.fb.array([]), // También puedes aplicar Validators.required si el FormArray no debe estar vacío
     });
+
+
+    const storedTags = localStorage.getItem('contactTags');
+    if (storedTags) {
+      this.tagToLocalStorage = JSON.parse(storedTags);
+      console.log(this.tagToLocalStorage);
+      
+    }
+
+
+    this.contactTags = this.formRegister.get('contactTags') as FormArray;
+    this.contactTags.clear();
+    this.tagToLocalStorage.forEach((tag) => {
+      this.contactTags.push(this.fb.control(tag));
+
+    });
+
   }
 
   saveContact() {
@@ -88,6 +117,7 @@ export class NewContactComponent implements OnInit {
       contactPhoto: this.formRegister.value.contactPhoto,
       contactNotes: this.formRegister.value.contactNotes,
       contactPhone: this.formRegister.value.contactPhone,
+      contactTags:this.formRegister.value.contactTags,
     };
 
     if (this.formRegister.valid) {
@@ -120,7 +150,6 @@ export class NewContactComponent implements OnInit {
         },
         complete: () => {
           this.dialogLoading.finish();
-
         },
       });
     } else {
@@ -134,55 +163,25 @@ export class NewContactComponent implements OnInit {
     }
   }
 
-
   createComponentEmail() {
-
-      this.containerEmail =
+    this.containerEmail =
       this.containerDynamicEmail.createComponent(EmaiDynamicComponent);
 
-      this.count = this.count ? this.count + 1 : 1;
-      console.log(this.count);
-      
-    
-
+    this.count = this.count ? this.count + 1 : 1;
+    console.log(this.count);
   }
   deleteComponentEmail() {
-    if (this.containerEmail ) {
+    if (this.containerEmail) {
       this.containerEmail.destroy();
       this.count = this.count ? this.count - 1 : 0;
     }
   }
 
-public count?: number;
-
-
-
-
-
-  onTypePhone(event: Event, typeSelected: number) {
-    this.selectedType = (event.target as HTMLInputElement).value;
-    const recurrent = this.getcontactPhoneFormArray.at(typeSelected);
-
-    recurrent.get('typePhone')?.setValue(this.selectedType);
-
-    console.log(recurrent);
-  }
+  public count?: number;
 
   get getcontactEmailFormArray() {
     return this.formRegister.get('contactEmail') as FormArray;
   }
-
-  get getcontactPhoneFormArray() {
-    return this.formRegister.get('contactPhone') as FormArray;
-  }
-
-  deletePhone(i: number) {
-    this.getcontactPhoneFormArray.removeAt(i);
-  }
-  addPhone() {
-    this.getcontactPhoneFormArray.push(this.fb.control(''));
-  }
-
   addEmail() {
     this.getcontactEmailFormArray.push(
       this.fb.control('', [
@@ -191,7 +190,7 @@ public count?: number;
     );
   }
 
-  deleteEmail(i:number){
+  deleteEmail(i: number) {
     this.getcontactEmailFormArray.removeAt(i);
   }
 
@@ -207,25 +206,51 @@ public count?: number;
     }
   }
 
-  // validatorEmail(){
-  //   if(this.getcontactEmailFormArray.invalid){
-  //     this.snackbar.open('El correo tiene un formato invalido', 'Aceptar', {
-  //       duration: 10 * 1000,
-  //       panelClass: ['red-snackbar']
-  //     })
-  //     if(this.getcontactEmailFormArray.valid){
-  //         console.log("validoo");
+  get getContactTagFormArray() {
+    return this.formRegister.get('contactTags') as FormArray;
+  }
 
-  //       }
-  //     }
+  deleteTag(i: number) {
+    this.getContactTagFormArray.removeAt(i);
+  }
 
-  //     return
+  saveTags() {    
+    const newTag = this.formRegister.get('newTag')?.value;
 
-  // }
+    if (newTag ) {
+      this.getContactTagFormArray.push(this.fb.control(newTag));
+      this.formRegister.get('newTag')?.setValue('');
 
-  // isFormatField(field: any): boolean | null {
-  //   const control = this.fb.array(field);{
-  //     return control && control.invalid && control.touched;
-  //   }
+      this.saveTagsInLocalStorage();
+
+    }
+  }
+
+  addTags(){
+    if (!this.tagSelected.includes(this.formRegister.get('contactTags')?.value)) {
+      this.tagSelected.push(this.formRegister.get('contactTags')?.value);
+    }    console.log(this.tagSelected);
+    
+  }
+  saveTagsInLocalStorage() {
+    const saveTag = JSON.parse(localStorage.getItem('tags') || '[]');
+
+    const currentTags = this.getContactTagFormArray.value as string[];
+    //merch tags in local storage
+    const uniqueTags = Array.from(new Set([...saveTag, ...currentTags]));
+
+    //save tags in local storage
+    localStorage.setItem('contactTags', JSON.stringify(uniqueTags));
+    
+
+  }
+
+  // openBottomSheet(): void {
+  //   this._bottomSheet
+  //     .open(TagsBottonSheetComponent)
+  //     .afterDismissed()
+  //     .subscribe((result) => {
+  //       console.log('Hola');
+  //     });
   // }
 }

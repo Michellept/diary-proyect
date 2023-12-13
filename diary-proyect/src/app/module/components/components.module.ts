@@ -36,6 +36,8 @@ import { PhoneDynamicComponent } from './phone-dynamic/phone-dynamic.component';
     FormComponent,
     DialogConfirmationComponent,
     EmaiDynamicComponent,
+    DialogLoadingComponent,
+
   ]
 
 })
