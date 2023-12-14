@@ -15,12 +15,14 @@ import { SharedModule } from './shared/shared.module';
 import { TagDialogComponent } from './module/components/tag-dialog/tag-dialog.component';
 import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { TagsBottonSheetComponent } from './module/components/tags-botton-sheet/tags-botton-sheet.component';
+import { AboutComponent } from './module/pages/about/pages/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TagDialogComponent,
     TagsBottonSheetComponent,
+    AboutComponent,
     
   ],
   imports: [

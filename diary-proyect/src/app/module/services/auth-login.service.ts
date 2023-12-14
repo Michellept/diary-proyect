@@ -16,7 +16,7 @@ export class AuthLoginService {
   private httpclient: HttpClient)
   {
   }
-  headers = new HttpHeaders().set('x-api-key', '7802c4c0');
+  // headers = new HttpHeaders().set('x-api-key', '7802c4c0');
 
   logIn(credentials : authInterface): Observable<any> {
     
@@ -30,19 +30,21 @@ export class AuthLoginService {
     };
     console.log(myObjCredentials);
     
-    return this.httpclient.put<any>(this.url +'auth/login',myObjCredentials,{headers:this.headers});
+    return this.httpclient.put<any>(this.url +'auth/login',myObjCredentials);
   }
   logOut(): Observable<any> {
     return this.httpclient.delete<any>(this.url +'auth/logout',
     
-    {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),})
+    // {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),}
+    )
 
   }
 
 
   tokenRefresh():Observable<any>{
-    return this.httpclient.post<any>(this.url +'auth/refresh',
-    {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),})
+    return this.httpclient.get<any>(this.url +'auth/refresh',
+    // {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),}
+    )
 
   }
 
@@ -50,15 +52,17 @@ export class AuthLoginService {
   getUserLogeado():Observable<any>{
     const idContact = 123;
     return this.httpclient.get(this.url +'users/profile/' + idContact,
-    {
-      headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),
-    }
+   
   );
   }
   registerNewUser(data:any){
-    return this.httpclient.post<any>(this.url +'users/create',
-    data,
-    {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),})
+    return this.httpclient.post<any>(this.url +'users/create',data,)
+  }
+
+  updateUser(data:any, idUser:number){
+    return this.httpclient.put<any>(this.url +'users/update/' + data, idUser,
+    // {headers: this.headers.set('Authorization', 'Bearer ' + '12345678at'),}
+    )
   }
 
   

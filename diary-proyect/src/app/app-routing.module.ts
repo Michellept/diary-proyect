@@ -23,7 +23,12 @@ const routes: Routes = [
   {
     path:'',
     loadChildren:()=> import('./module/pages/profile/profile.module').then(m=>m.ProfileModule)
+  },
+  {
+    path:'',
+    loadChildren:()=> import('./module/pages/about/about.module').then(m=>m.AboutModule)
   }
+
 ];
 
 @NgModule({

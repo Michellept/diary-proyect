@@ -101,6 +101,35 @@ export class NavbarComponent {
   //     });
   //   }
 
+
+  changePhoto(){
+
+    const dialog = this.dialog.open(DialogConfirmationComponent, {
+      width: '450px',
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        title: 'Cambiar imagen de perfil',
+        message: '¿Estas seguro de cambiar tu imagen de perfil?',
+      },
+    });
+    if (dialog) {
+      dialog.afterClosed().subscribe((confirmation) => {
+        if (confirmation) {
+   
+          this.router.navigate(['/profile']);
+      
+        }
+      });
+    }
+
+  }
+
+
+
+
+
+
   logOut() {
     const dialog = this.dialog.open(DialogConfirmationComponent, {
       width: '450px',
