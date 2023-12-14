@@ -3,96 +3,180 @@
 <div class="container card mt-5">
   <form [formGroup]="formRegister" autocomplete="off">
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <button class="btn btn-primary mt-3 mb-5 btn-block" type="button" (click)="addEmail()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-          class="bi bi-envelope-plus-fill" viewBox="0 0 16 16">
+      <button
+        class="btn btn-primary mt-3 mb-5 btn-block"
+        type="button"
+        (click)="addEmail()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-envelope-plus-fill"
+          viewBox="0 0 16 16"
+        >
           <path
-            d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 4.697v4.974A4.491 4.491 0 0 0 12.5 8a4.49 4.49 0 0 0-1.965.45l-.338-.207z" />
+            d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 4.697v4.974A4.491 4.491 0 0 0 12.5 8a4.49 4.49 0 0 0-1.965.45l-.338-.207z"
+          />
           <path
-            d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5" />
-        </svg>Agregar Correo
+            d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 0 0 1 0v-1h1a.5.5 0 0 0 0-1h-1v-1a.5.5 0 0 0-.5-.5"
+          /></svg
+        >Agregar Correo
       </button>
 
       <!-- <button
       class="btn btn-primary mt-3 mb-5 btn-block"
       type="button"
-      (click)="createComponentEmail()"
+      (click)="createComponentPhone()"
       >
       Correo dinamico
       </button> -->
     </div>
 
-    <div class="row col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center">
+    <div
+      class="row col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center"
+    >
       <h3>Datos de contacto</h3>
 
       <div class="col-3 mb-4">
         <label class="form-label">Nombre</label>
-        <app-form [form]="formRegister" type="text" placeholder="Apellido" controlName="contactFirstName"></app-form>
-        <small *ngIf="isValidField('contactFirstName')" class="text-danger">Este campos es obligatorio</small>
+        <app-form
+          [form]="formRegister"
+          type="text"
+          placeholder="Apellido"
+          controlName="contactFirstName"
+        ></app-form>
+        <small *ngIf="isValidField('contactFirstName')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
       </div>
       <div class="col-3 mb-4">
         <label class="form-label">Apellido</label>
-        <app-form [form]="formRegister" type="text" placeholder="Apellido" controlName="contactLastName"></app-form>
-        <small *ngIf="isValidField('contactLastName')" class="text-danger">Este campos es obligatorio</small>
+        <app-form
+          [form]="formRegister"
+          type="text"
+          placeholder="Apellido"
+          controlName="contactLastName"
+        ></app-form>
+        <small *ngIf="isValidField('contactLastName')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
       </div>
 
       <div class="col-3 mb-4">
         <label class="form-label">Alias</label>
-        <app-form [form]="formRegister" type="text" placeholder="Alias" controlName="contactAlias"></app-form>
+        <app-form
+          [form]="formRegister"
+          type="text"
+          placeholder="Alias"
+          controlName="contactAlias"
+        ></app-form>
       </div>
       <div class="col-3 mb-4">
         <label class="form-label">Empresa</label>
-        <app-form [form]="formRegister" type="text" placeholder="Empresa" controlName="contactCompany"></app-form>
+        <app-form
+          [form]="formRegister"
+          type="text"
+          placeholder="Empresa"
+          controlName="contactCompany"
+        ></app-form>
       </div>
       <div class="col-3 mb-4">
         <label class="form-label">Cumpleaños</label>
-        <input type="datetime-local" class="form-control" placeholder="Cumpleaños" formControlName="contactBirthday" />
-        <small *ngIf="isValidField('contactBirthday')" class="text-danger">Este campos es obligatorio</small>
+        <input
+          type="datetime-local"
+          class="form-control"
+          placeholder="Cumpleaños"
+          formControlName="contactBirthday"
+        />
+        <small *ngIf="isValidField('contactBirthday')" class="text-danger"
+          >Este campos es obligatorio</small
+        >
       </div>
       <div class="col-4 mb-4">
         <label class="form-label">Fotografia</label>
-        <input type="file" class="form-control" formControlName="contactPhoto" />
+        <input
+          type="file"
+          class="form-control"
+          formControlName="contactPhoto"
+        />
       </div>
 
       <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"
-          formControlName="contactNotes"></textarea>
+        <textarea
+          class="form-control"
+          placeholder="Leave a comment here"
+          id="floatingTextarea2"
+          style="height: 100px"
+          formControlName="contactNotes"
+        ></textarea>
         <label for="floatingTextarea2">Notas</label>
       </div>
     </div>
 
     <!-- email -->
-    <div class="col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center">
+    <div
+      class="col-12 p-3 animate__animated animate__fadeIn d-flex justify-content-center"
+    >
       <div class="col">
         <div formArrayName="contactEmail">
-          <div *ngFor="
+          <div
+            *ngFor="
               let emailControl of getcontactEmailFormArray.controls;
               let i = index
-            ">
+            "
+          >
             <div class="input-group mt-3">
               <span class="input-group-text" id="basic-addon1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                  class="bi bi-envelope-at" viewBox="0 0 16 16">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-envelope-at"
+                  viewBox="0 0 16 16"
+                >
                   <path
-                    d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2zm3.708 6.208L1 11.105V5.383zM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2z" />
+                    d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2zm3.708 6.208L1 11.105V5.383zM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2z"
+                  />
                   <path
-                    d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648Zm-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z" />
-                </svg></span>
-              <input type="text" class="form-control" [formControlName]="i" placeholder="Correo {{ i + 1 }}" />
+                    d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648Zm-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z"
+                  /></svg
+              ></span>
+              <input
+                type="text"
+                class="form-control"
+                [formControlName]="i"
+                placeholder="Correo {{ i + 1 }}"
+              />
               <button class="btn btn-danger" (click)="deleteEmail(i)">
                 Borrar
               </button>
             </div>
-            <small *ngIf="emailControl.invalid && emailControl.touched" class="text-danger">
+            <small
+              *ngIf="emailControl.invalid && emailControl.touched"
+              class="text-danger"
+            >
               El formato debe ser example@gmail.com
             </small>
           </div>
         </div>
       </div>
     </div>
-    <!-- 
-    <div appDirectivePhone>
-    -->
+
+    <div dynamicPhone></div>
+    <button  type="button" class="btn btn-danger mt-3 mb-5 btn-block" (click)="deleteComponentPhone()">
+      Eliminar Telefono
+    </button>
+    <button
+    class="btn btn-outline-success mt-3 mb-5 btn-block"
+    type="button"
+    (click)="createComponentPhone()"
+    >
+    Agregar Telefono
+    </button>
+
     <div>
       <div class="card-body d-flex flex-column _mat-animation-noopable">
         <div class="d-flex justify-content-between">
@@ -100,28 +184,53 @@
         </div>
         <hr />
         <div class="input-group">
-          <select formArrayName="contactTags" class="form-select" aria-label="Default select example" (change) = "addTags()">
+          <select
+            formArrayName="contactTags"
+            class="form-select"
+            aria-label="Default select example"
+            (change)="addTags()"
+          >
             <option *ngFor="let tag of tagToLocalStorage; let i = index">
               {{ tag }}
             </option>
           </select>
           <input type="text" class="form-control" formControlName="newTag" />
-          <button type="button" class="btn btn-outline-success" (click)="saveTags()">
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            (click)="saveTags()"
+          >
             Agregar Etiqueta
           </button>
         </div>
       </div>
-      
+
       <div class="row m-3">
-        <div class="text-center col-3" formArrayName="contactTags"
-          *ngFor="let tag of tagSelected; let i = index">
-          <span class="badge rounded-4 bg-gradient input-group-text d-sm-flex m-1 align-items-center tags">
-            <h4 class="form-control input-tag" type="text" >{{tag}}</h4>
-            <button class="btn btn-sm btn-danger btn-tang" type="button" (click)="deleteTag(i)">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
-                viewBox="0 0 16 16">
+        <div
+          class="text-center col-3"
+          formArrayName="contactTags"
+          *ngFor="let tag of tagSelected; let i = index"
+        >
+          <span
+            class="badge rounded-4 bg-gradient input-group-text d-sm-flex m-1 align-items-center tags"
+          >
+            <h4 class="form-control input-tag" type="text">{{ tag }}</h4>
+            <button
+              class="btn btn-sm btn-danger btn-tang"
+              type="button"
+              (click)="deleteTag(i)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-x-lg"
+                viewBox="0 0 16 16"
+              >
                 <path
-                  d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                  d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+                />
               </svg>
             </button>
           </span>
@@ -130,8 +239,12 @@
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3 mt-5">
-      <button class="btn btn-outline-danger me-md-2" type="button" [routerLink]="['/list-contact']"
-        routerLinkActive="router-link-active">
+      <button
+        class="btn btn-outline-danger me-md-2"
+        type="button"
+        [routerLink]="['/list-contact']"
+        routerLinkActive="router-link-active"
+      >
         Cancelar
       </button>
       <button class="btn btn-primary" type="button" (click)="saveContact()">

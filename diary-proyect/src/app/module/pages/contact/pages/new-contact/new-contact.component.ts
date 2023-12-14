@@ -5,22 +5,12 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { EmaiDynamicComponent } from 'src/app/module/components/emai-dynamic/emai-dynamic.component';
+import { PhoneDynamicComponent } from 'src/app/module/components/phone-dynamic/phone-dynamic.component';
 import { DialogLoadingService } from 'src/app/module/components/service/dialog-loading.service';
-import { TagsBottonSheetComponent } from 'src/app/module/components/tags-botton-sheet/tags-botton-sheet.component';
 import { ContactService } from 'src/app/module/services/contact.service';
-import { tagInterface } from 'src/app/module/services/interface/tags-interface';
 import { DirectivesDirective } from 'src/app/shared/directives.directive';
 
 @Component({
@@ -33,9 +23,9 @@ export class NewContactComponent implements OnInit {
   numContacts$ = this.numContacts.asObservable();
 
   @ViewChild(DirectivesDirective, { read: ViewContainerRef })
-  public containerDynamicEmail!: ViewContainerRef; // variable para guardar mi input de email
-  private containerEmail!: ComponentRef<EmaiDynamicComponent>;
-
+  public dynamicPhoneRef!: ViewContainerRef; // variable para guardar mi input de email
+  private componentRef: ComponentRef<PhoneDynamicComponent>[] = [];
+  public countComponent!: number;
   selectedType: string = ''; // Variable para almacenar el tipo seleccionado
   types = [
     { value: 1, name: 'Casa' },
@@ -49,21 +39,16 @@ export class NewContactComponent implements OnInit {
   public contactToEditId: any;
   contactTags = this.fb.array([]);
   tagToLocalStorage: string[] = [];
-  tagSelected : string[] = [];
+  tagSelected: string[] = [];
 
   constructor(
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private createcontactService: ContactService,
-    private router: Router,
-    private dialogLoading: DialogLoadingService,
-    private _bottomSheet: MatBottomSheet
+    private dialogLoading: DialogLoadingService
   ) {
-
-
     // this.tagToLocalStorage = localStorage.getItem('tags');
     // console.log("LocalStorageTag",this.tagToLocalStorage);
-    
   }
 
   ngOnInit(): void {
@@ -85,25 +70,20 @@ export class NewContactComponent implements OnInit {
       contactNotes: [''],
       contactTags: this.fb.array([]),
       newTag: [''],
-      contactPhone: this.fb.array([]), // También puedes aplicar Validators.required si el FormArray no debe estar vacío
+      contactPhone: this.fb.array([]),
     });
-
 
     const storedTags = localStorage.getItem('contactTags');
     if (storedTags) {
       this.tagToLocalStorage = JSON.parse(storedTags);
       console.log(this.tagToLocalStorage);
-      
     }
-
 
     this.contactTags = this.formRegister.get('contactTags') as FormArray;
     this.contactTags.clear();
     this.tagToLocalStorage.forEach((tag) => {
       this.contactTags.push(this.fb.control(tag));
-
     });
-
   }
 
   saveContact() {
@@ -117,7 +97,7 @@ export class NewContactComponent implements OnInit {
       contactPhoto: this.formRegister.value.contactPhoto,
       contactNotes: this.formRegister.value.contactNotes,
       contactPhone: this.formRegister.value.contactPhone,
-      contactTags:this.formRegister.value.contactTags,
+      contactTags: this.formRegister.value.contactTags,
     };
 
     if (this.formRegister.valid) {
@@ -163,22 +143,29 @@ export class NewContactComponent implements OnInit {
     }
   }
 
-  createComponentEmail() {
-    this.containerEmail =
-      this.containerDynamicEmail.createComponent(EmaiDynamicComponent);
+  createComponentPhone(): void {
+    const component = this.dynamicPhoneRef.createComponent(
+      PhoneDynamicComponent
+    );
+    this.componentRef.push(component);
 
-    this.count = this.count ? this.count + 1 : 1;
-    console.log(this.count);
+    const componentIndex = this.componentRef.indexOf(component) + 2;
+    (component.instance as PhoneDynamicComponent).keyPhone = componentIndex;
   }
-  deleteComponentEmail() {
-    if (this.containerEmail) {
-      this.containerEmail.destroy();
-      this.count = this.count ? this.count - 1 : 0;
+  deleteComponentPhone(): void {
+    const index = this.componentRef.length - 1;
+    if (index >= 0 && this.componentRef.length) {
+      const componentRefToDelete = this.componentRef[index];
+      componentRefToDelete.destroy();
+      this.componentRef.splice(index, 1);
+      // this.componentRef[index-1].destroy();
     }
+
+    // if (this.componentRef && this.componentRef.hostView) {
+    //   // this.componentRef.destroy();
+    //   // this.count = this.count ? this.count - 1 : 0;
+    // }
   }
-
-  public count?: number;
-
   get getcontactEmailFormArray() {
     return this.formRegister.get('contactEmail') as FormArray;
   }
@@ -214,23 +201,24 @@ export class NewContactComponent implements OnInit {
     this.getContactTagFormArray.removeAt(i);
   }
 
-  saveTags() {    
+  saveTags() {
     const newTag = this.formRegister.get('newTag')?.value;
 
-    if (newTag ) {
+    if (newTag) {
       this.getContactTagFormArray.push(this.fb.control(newTag));
       this.formRegister.get('newTag')?.setValue('');
 
       this.saveTagsInLocalStorage();
-
     }
   }
 
-  addTags(){
-    if (!this.tagSelected.includes(this.formRegister.get('contactTags')?.value)) {
+  addTags() {
+    if (
+      !this.tagSelected.includes(this.formRegister.get('contactTags')?.value)
+    ) {
       this.tagSelected.push(this.formRegister.get('contactTags')?.value);
-    }    console.log(this.tagSelected);
-    
+    }
+    console.log(this.tagSelected);
   }
   saveTagsInLocalStorage() {
     const saveTag = JSON.parse(localStorage.getItem('tags') || '[]');
@@ -241,8 +229,6 @@ export class NewContactComponent implements OnInit {
 
     //save tags in local storage
     localStorage.setItem('contactTags', JSON.stringify(uniqueTags));
-    
-
   }
 
   // openBottomSheet(): void {

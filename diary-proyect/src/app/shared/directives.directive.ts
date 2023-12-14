@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[appDirectivePhone]'
+  selector: '[dynamicPhone]'
 })
 export class DirectivesDirective {
 

@@ -9,7 +9,6 @@ import { DialogConfirmationComponent } from './dialog-confirmation/dialog-confir
 import { DialogLoadingComponent } from './dialog-loading/dialog-loading.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { EmaiDynamicComponent } from './emai-dynamic/emai-dynamic.component';
 import { PhoneDynamicComponent } from './phone-dynamic/phone-dynamic.component';
 
 
@@ -19,7 +18,6 @@ import { PhoneDynamicComponent } from './phone-dynamic/phone-dynamic.component';
     FormComponent,
     DialogConfirmationComponent,
     DialogLoadingComponent,
-    EmaiDynamicComponent,
     PhoneDynamicComponent,
   ],
   imports: [
@@ -35,8 +33,9 @@ import { PhoneDynamicComponent } from './phone-dynamic/phone-dynamic.component';
     NavbarComponent,
     FormComponent,
     DialogConfirmationComponent,
-    EmaiDynamicComponent,
     DialogLoadingComponent,
+    PhoneDynamicComponent,
+
 
   ]
 

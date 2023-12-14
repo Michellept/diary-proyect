@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-phone-dynamic',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./phone-dynamic.component.scss']
 })
 export class PhoneDynamicComponent {
+
+
+  public keyPhone!:number;
+  @Input() phoneFormDynamic!: FormGroup;
+  @Input() phoneControDynamic!: FormControl;
 
 }
