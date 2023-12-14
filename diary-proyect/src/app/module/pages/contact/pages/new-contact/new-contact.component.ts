@@ -208,8 +208,11 @@ export class NewContactComponent implements OnInit {
   }
 
   deleteTag(i: number) {
-    this.tagSelected.splice(i);
+    if (i >= 0 && i < this.tagSelected.length) {
+      this.tagSelected.splice(i, 1);
+    }
   }
+  
   deleteTagLocalStorage(i: number) {
     this.tagToLocalStorage.splice(i, 1);
     localStorage.setItem('contactTags', JSON.stringify(this.tagToLocalStorage));
