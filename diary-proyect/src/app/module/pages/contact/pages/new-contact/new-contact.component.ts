@@ -75,17 +75,19 @@ export class NewContactComponent implements OnInit {
       contactPhone: this.fb.array([]),
     });
 
-    const storedTags = localStorage.getItem('contactTags');
+
+    // carga la informacion guardada en localStorage de Tags
+    const storedTags = localStorage.getItem('tags');
     if (storedTags) {
       this.tagToLocalStorage = JSON.parse(storedTags);
       console.log(this.tagToLocalStorage);
     }
 
-    this.contactTags = this.formRegister.get('contactTags') as FormArray;
-    this.contactTags.clear();
-    this.tagToLocalStorage.forEach((tag) => {
-      this.contactTags.push(this.fb.control(tag));
-    });
+    // this.contactTags = this.formRegister.get('contactTags') as FormArray;
+    // this.contactTags.clear();
+    // this.tagToLocalStorage.forEach((tag) => {
+    //   this.contactTags.push(this.fb.control(tag));
+    // });
 
     this.saveTags();
   }
@@ -216,23 +218,22 @@ export class NewContactComponent implements OnInit {
   }
 
   saveTags() {
-    const newTag = this.formRegister.get('newTag')?.value;
-
-    if (newTag && !this.tagToLocalStorage.includes(newTag)) {
-      // Añadir el nuevo tag solo si no está duplicado
-      this.tagToLocalStorage.push(newTag);
-
-      // Actualizar el localStorage
-      localStorage.setItem('newTag', JSON.stringify(this.tagToLocalStorage));
-
-      // Actualizar el valor del formulario
-      this.formRegister.value.contactTags = this.tagToLocalStorage;
-    }
-  
-    this.formRegister.get('newTag')?.setValue('');
-    // this.tagToLocalStorage.push(this.formRegister.get('newTag')?.value);
-    // localStorage.setItem('tags', JSON.stringify(this.tagToLocalStorage));
-    // this.formRegister.value.contactTags = this.tagToLocalStorage;
+      const newTag = this.formRegister.get('newTag')?.value;
+    
+      if (newTag && !this.tagToLocalStorage.includes(newTag)) {
+        // Añadir el nuevo tag solo si no está duplicado
+        this.tagToLocalStorage.push(newTag);
+    
+        // Actualizar el localStorage con la clave 'tags'
+        localStorage.setItem('tags', JSON.stringify(this.tagToLocalStorage));
+    
+        // Actualizar el valor del formulario
+        this.formRegister.value.contactTags = this.tagToLocalStorage;
+      }
+    
+      this.formRegister.get('newTag')?.setValue('');
+    
+    
   }
 
   addSelectedTagFromSelect() {
