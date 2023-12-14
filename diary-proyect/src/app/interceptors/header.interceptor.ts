@@ -4,14 +4,18 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpHeaders
+  HttpHeaders,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class HeaderInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(
+    private snakbar: MatSnackBar,
+  ) {}
    headers = new HttpHeaders().set('x-api-key', '7802c4c0');
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -24,6 +28,16 @@ export class HeaderInterceptor implements HttpInterceptor {
     });
 
 
-    return next.handle(reqClone);
+    return next.handle(reqClone).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.log(error);
+        return throwError(() => {
+          this.snakbar.open(error.error.message, 'Aceptar', {
+            duration: 1000,
+          })
+        });
+        
+      })
+    );
   }
 }
