@@ -20,8 +20,6 @@ export class NavbarComponent {
   ];
 
   counter = 0;
-  
-  dataUserLogeado:any;
 
   dataUser: any = {
     userEmail: localStorage.getItem('userEmail'),
@@ -48,6 +46,10 @@ export class NavbarComponent {
       this.counter = numContacts;
       console.log(this.counter);
     });
+
+    this.dataUser = JSON.parse(localStorage.getItem('userLogeado')!);
+    console.log((this.dataUser = JSON.parse(localStorage.getItem('userLogeado')!)));
+
     this.getContact();
   }
   openModule(module: any) {
@@ -55,29 +57,26 @@ export class NavbarComponent {
   }
 
   getContact() {
-
-    const user = localStorage.getItem('dataUser');
-if (user === null) {
-
-  this.authService.getUserLogeado().subscribe({
-    next: (response) => {
-      // console.log('RESPONSE',response);
-      if (response.succeed) {
-    localStorage.setItem('userLogeado', JSON.stringify(response.result.user))       
-       // this.dataUser = response.result.user;
-        // localStorage.setItem('dataUser', JSON.stringify(this.dataUser));
-        console.log('Usuario Logeado', this.dataUser);
-
-      }
-    },
-    error: (error) => {
-      console.log(error);
-    },
-  });
-
-
-}
-    
+    const user = localStorage.getItem('userLogeado');
+    if (user === null) {
+      this.authService.getUserLogeado().subscribe({
+        next: (response) => {
+          // console.log('RESPONSE',response);
+          if (response.succeed) {
+            localStorage.setItem(
+              'userLogeado',
+              JSON.stringify(response.result.user)
+            );
+            
+            // this.dataUser = response.result.user;
+            // localStorage.setItem('dataUser', JSON.stringify(this.dataUser));
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    }
   }
 
   // getContact() {

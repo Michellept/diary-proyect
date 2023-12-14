@@ -42,13 +42,16 @@
           fxLayout="column"
         >
           <img
-            class="rounded"
-            style="width: 10%"
+            class="rounded-5"
+            style="width: 30%"
             src="{{ dataUser.userPhoto }}"
             alt="user-photo"
           />
           <p>
-            {{ dataUser.userName }}
+            {{ dataUser.userFullName }}
+          </p>
+          <p>
+            {{dataUser.userEmail}}
           </p>
         </div>
 
