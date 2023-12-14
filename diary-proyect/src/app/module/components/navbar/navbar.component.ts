@@ -20,6 +20,8 @@ export class NavbarComponent {
   ];
 
   counter = 0;
+  
+  dataUserLogeado:any;
 
   dataUser: any = {
     userEmail: localStorage.getItem('userEmail'),
@@ -53,18 +55,29 @@ export class NavbarComponent {
   }
 
   getContact() {
-    this.authService.getUserLogeado().subscribe({
-      next: (response) => {
-        // console.log('RESPONSE',response);
-        if (response.succeed) {
-          this.dataUser = response.result.user;
-          console.log('Usuario Logeado', this.dataUser);
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+
+    const user = localStorage.getItem('dataUser');
+if (user === null) {
+
+  this.authService.getUserLogeado().subscribe({
+    next: (response) => {
+      // console.log('RESPONSE',response);
+      if (response.succeed) {
+    localStorage.setItem('userLogeado', JSON.stringify(response.result.user))       
+       // this.dataUser = response.result.user;
+        // localStorage.setItem('dataUser', JSON.stringify(this.dataUser));
+        console.log('Usuario Logeado', this.dataUser);
+
+      }
+    },
+    error: (error) => {
+      console.log(error);
+    },
+  });
+
+
+}
+    
   }
 
   // getContact() {
