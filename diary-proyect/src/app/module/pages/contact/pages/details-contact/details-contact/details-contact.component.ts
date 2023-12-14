@@ -185,9 +185,31 @@ export class DetailsContactComponent implements OnInit {
     );
   }
 
-  deleteEmail(i: number) {
-    this.getcontactEmailFormArray.removeAt(i);
+
+  deletePhone(i: number) {
+    this.getcontactPhoneFormArray.removeAt(i);
   }
+
+  get getcontactPhoneFormArray() {
+    return this.formEditContact.get('contactPhones') as FormArray;
+  }
+  addPhone() {
+    this.getcontactPhoneFormArray.push(
+      this.fb.control('', [
+        Validators.pattern('^[0-9]*$'),
+      ])
+    );
+  }
+
+  deleteEmail(i: number) {
+    this.getcontactPhoneFormArray.removeAt(i);
+  }
+
+
+
+
+
+
 
   isValidField(field: string): boolean | null {
     const control = this.formEditContact.controls[field];

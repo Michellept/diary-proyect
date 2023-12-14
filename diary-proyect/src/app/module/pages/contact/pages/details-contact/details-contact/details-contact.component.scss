@@ -19,12 +19,16 @@ img{
 
 
 .tags{
-    border:none;
-    background-color: #9aa3a2;
+    width: 100%;
+    background-color: #ffffff;
     border-radius: 5px;
-    color: white;
+    color: rgb(0, 0, 0);
     margin-top: 5%;
-    margin-bottom: 5%
+    margin-bottom: 5%;
+    border-radius: 1px;
+    border-color: #92b8b3;
+    border-style: solid;
+    
     
 
 }
@@ -32,7 +36,7 @@ img{
 .input-tag{
     background-color:transparent; 
     border-color: transparent;
-    color: white;
+    color: rgb(0, 0, 0);
     margin-top: 5%;
 }
 .card{
@@ -40,3 +44,4 @@ img{
     border-radius: 32px;
     
 }
+

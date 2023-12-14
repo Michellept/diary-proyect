@@ -74,7 +74,7 @@
                         d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648Zm-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z" />
                     </svg></span>
                   <input type="text" class="form-control" [formControlName]="i" placeholder="Correo {{ i + 1 }}" />
-                  <button class="btn btn-danger"  type="button" (click)="deleteEmail(i)">
+                  <button class="btn btn-danger" type="button" (click)="deleteEmail(i)">
                     Borrar
                   </button>
                 </div>
@@ -85,46 +85,42 @@
             </div>
           </div>
         </div>
-        <!-- 
-          <label class="form-label mt-2">Correos</label>
-  
-          <app-form
-            [form]="formEditContact"
-            type="email"
-            controlName="contactEmails"
-          ></app-form> -->
 
-        <!-- Tags  -->
-        <!-- <div>
-          <div class="card-body d-flex flex-column _mat-animation-noopable">
-            <div class="d-flex justify-content-between">
-              <h4>Etiquetas</h4>
-              <button type="button" class="btn btn-outline-info">
-                Agregar Etiquetas
-              </button>
-            </div>
-            <hr />
-          </div>
-          <div class="row m-3">
-            <div class="text-center col-3" formArrayName="contactTags" *ngFor="let tag of contactTags.controls; let i = index">
-              <span class="badge rounded-4  bg-gradient  input-group-text d-sm-flex m-1 align-items-center tags">
-                <h4 class="form-control input-tag"  type="text">
-                  {{ tag.value }}
-                </h4>
-                <button class="btn btn-sm btn-danger
-                
-                btn-tang   " (click)="deleteTag(i)">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
-                    viewBox="0 0 16 16">
-                    <path
-                      d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                  </svg>
-                </button>
-              </span>
-            </div>
-          </div>
-        </div> -->
 
+                <!-- phone -->
+                <div class="col-12 mt-5 mb-3 animate__animated animate__fadeIn d-flex justify-content-center">
+                  <div class="col m-3">
+                    <div class="d-flex justify-content-between">
+                      <h4>Telefonos</h4>
+                      <button type="button" class="btn btn-outline-info" (click)="addPhone()">
+                        Agregar Telefono
+                      </button>
+                    </div>
+                    <hr />
+                    <div formArrayName="contactPhones">
+                      <div *ngFor="
+                          let phoneControl of getcontactPhoneFormArray.controls;
+                          let i = index
+                        ">
+                        <!-- <label class="form-label mt-3 ">Correo {{ i + 1 }}</label> -->
+        
+                        <div class="input-group mt-2">
+                          <span class="input-group-text" id="basic-addon1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                              <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                            </svg></span>
+                          <input type="text" class="form-control" [formControlName]="i" placeholder="Telefono {{ i + 1 }}" />
+                          <button class="btn btn-danger" type="button" (click)="deletePhone(i)">
+                            Borrar
+                          </button>
+                        </div>
+                        <small *ngIf="phoneControl.invalid && phoneControl.touched" class="text-danger">
+                          El formato debe ser example@gmail.com
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
         <div>
           <div class="card-body d-flex flex-column _mat-animation-noopable">
@@ -142,8 +138,10 @@
           <div class="row m-3">
             <div class="text-center col-3" formArrayName="contactTags"
               *ngFor="let tag of contactTags.controls; let i = index">
-              <span class="badge rounded-4 bg-gradient input-group-text d-sm-flex m-1 align-items-center tags">
-                <h4 class="form-control input-tag" type="text">{{ tag.value }}</h4>
+              <div class="badge rounded-4 d-sm-flex align-items-center tags">
+                <h4 class="form-control input-tag" type="text">
+                  {{ tag.value }}
+                </h4>
                 <button class="btn btn-sm btn-danger btn-tang" type="button" (click)="deleteTag(i)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
                     viewBox="0 0 16 16">
@@ -151,7 +149,7 @@
                       d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
                   </svg>
                 </button>
-              </span>
+              </div>
             </div>
           </div>
         </div>
