@@ -26,7 +26,7 @@ export class NewContactComponent implements OnInit {
   public dynamicPhoneRef!: ViewContainerRef; // variable para guardar mi input de email
   private componentRef: ComponentRef<PhoneDynamicComponent>[] = [];
   public countComponent!: number;
-  selectedType: string = ''; // Variable para almacenar el tipo seleccionado
+  selectedType: string = '';
   types = [
     { value: 1, name: 'Casa' },
     { value: 2, name: 'Telefono' },
@@ -40,6 +40,8 @@ export class NewContactComponent implements OnInit {
   contactTags = this.fb.array([]);
   tagToLocalStorage: string[] = [];
   tagSelected: string[] = [];
+  inputSelect: string[] = [];
+  availableTags: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -68,7 +70,7 @@ export class NewContactComponent implements OnInit {
       contactBirthday: ['', Validators.required],
       contactPhoto: [''],
       contactNotes: [''],
-      contactTags: this.fb.array([]),
+      contactTags:[this.tagSelected],
       newTag: [''],
       contactPhone: this.fb.array([]),
     });
@@ -84,9 +86,14 @@ export class NewContactComponent implements OnInit {
     this.tagToLocalStorage.forEach((tag) => {
       this.contactTags.push(this.fb.control(tag));
     });
+
+    this.saveTags();
   }
 
   saveContact() {
+
+    console.log(this.tagSelected);
+    this.formRegister.value.contactTags=this.tagSelected;
     const modelRegister = {
       contactFirstName: this.formRegister.value.contactFirstName,
       contactLastName: this.formRegister.value.contactLastName,
@@ -99,6 +106,7 @@ export class NewContactComponent implements OnInit {
       contactPhone: this.formRegister.value.contactPhone,
       contactTags: this.formRegister.value.contactTags,
     };
+    console.log(modelRegister);
 
     if (this.formRegister.valid) {
       this.dialogLoading.show(
@@ -198,45 +206,39 @@ export class NewContactComponent implements OnInit {
   }
 
   deleteTag(i: number) {
-    this.getContactTagFormArray.removeAt(i);
+    this.tagSelected.splice(i);
+  }
+  deleteTagLocalStorage(i: number) {
+    this.tagToLocalStorage.splice(i, 1);
+    localStorage.setItem('contactTags', JSON.stringify(this.tagToLocalStorage));
+    this.tagToLocalStorage = JSON.parse(localStorage.getItem('contactTags')!);
+    this.formRegister.value.contactTags = this.tagToLocalStorage;
   }
 
   saveTags() {
     const newTag = this.formRegister.get('newTag')?.value;
 
-    if (newTag) {
-      this.getContactTagFormArray.push(this.fb.control(newTag));
-      this.formRegister.get('newTag')?.setValue('');
+    if (newTag && !this.tagToLocalStorage.includes(newTag)) {
+      // Añadir el nuevo tag solo si no está duplicado
+      this.tagToLocalStorage.push(newTag);
 
-      this.saveTagsInLocalStorage();
+      // Actualizar el localStorage
+      localStorage.setItem('newTag', JSON.stringify(this.tagToLocalStorage));
+
+      // Actualizar el valor del formulario
+      this.formRegister.value.contactTags = this.tagToLocalStorage;
     }
+  
+    this.formRegister.get('newTag')?.setValue('');
+    // this.tagToLocalStorage.push(this.formRegister.get('newTag')?.value);
+    // localStorage.setItem('tags', JSON.stringify(this.tagToLocalStorage));
+    // this.formRegister.value.contactTags = this.tagToLocalStorage;
   }
 
-  addTags() {
-    if (
-      !this.tagSelected.includes(this.formRegister.get('contactTags')?.value)
-    ) {
-      this.tagSelected.push(this.formRegister.get('contactTags')?.value);
-    }
+  addSelectedTagFromSelect() {
+    if(this.tagSelected && !this.tagSelected.includes(this.formRegister.get('contactTags')?.value))
+    this.tagSelected.push(this.formRegister.get('contactTags')?.value);
     console.log(this.tagSelected);
   }
-  saveTagsInLocalStorage() {
-    const saveTag = JSON.parse(localStorage.getItem('tags') || '[]');
-
-    const currentTags = this.getContactTagFormArray.value as string[];
-    //merch tags in local storage
-    const uniqueTags = Array.from(new Set([...saveTag, ...currentTags]));
-
-    //save tags in local storage
-    localStorage.setItem('contactTags', JSON.stringify(uniqueTags));
-  }
-
-  // openBottomSheet(): void {
-  //   this._bottomSheet
-  //     .open(TagsBottonSheetComponent)
-  //     .afterDismissed()
-  //     .subscribe((result) => {
-  //       console.log('Hola');
-  //     });
-  // }
 }
+

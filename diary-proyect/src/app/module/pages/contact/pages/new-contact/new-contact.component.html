@@ -166,15 +166,19 @@
     </div>
 
     <div dynamicPhone></div>
-    <button  type="button" class="btn btn-danger mt-3 mb-5 btn-block" (click)="deleteComponentPhone()">
+    <button
+      type="button"
+      class="btn btn-danger mt-3 mb-5 btn-block"
+      (click)="deleteComponentPhone()"
+    >
       Eliminar Telefono
     </button>
     <button
-    class="btn btn-outline-success mt-3 mb-5 btn-block"
-    type="button"
-    (click)="createComponentPhone()"
+      class="btn btn-outline-success mt-3 mb-5 btn-block"
+      type="button"
+      (click)="createComponentPhone()"
     >
-    Agregar Telefono
+      Agregar Telefono
     </button>
 
     <div>
@@ -185,15 +189,20 @@
         <hr />
         <div class="input-group">
           <select
-            formArrayName="contactTags"
+            formControlName="contactTags"
             class="form-select"
             aria-label="Default select example"
-            (change)="addTags()"
+            (change)="addSelectedTagFromSelect()"
           >
-            <option *ngFor="let tag of tagToLocalStorage; let i = index">
-              {{ tag }}
-            </option>
+          <option *ngIf="tagToLocalStorage.length === 0" disabled selected>No hay etiquetas disponibles</option>
+
+          <option *ngFor="let tag of tagToLocalStorage; let i = index">
+              {{ tag }} 
+          </option>
+
           </select>
+
+
           <input type="text" class="form-control" formControlName="newTag" />
           <button
             type="button"
@@ -212,6 +221,7 @@
           *ngFor="let tag of tagSelected; let i = index"
         >
           <span
+            *ngIf="tagSelected.length > 0"
             class="badge rounded-4 bg-gradient input-group-text d-sm-flex m-1 align-items-center tags"
           >
             <h4 class="form-control input-tag" type="text">{{ tag }}</h4>
