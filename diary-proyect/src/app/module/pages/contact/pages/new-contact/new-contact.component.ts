@@ -1,13 +1,20 @@
 import {
   Component,
+  ComponentFactoryResolver,
   ComponentRef,
   OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { PhoneDynamicComponent } from 'src/app/module/components/phone-dynamic/phone-dynamic.component';
 import { DialogLoadingService } from 'src/app/module/components/service/dialog-loading.service';
 import { ContactService } from 'src/app/module/services/contact.service';
@@ -24,7 +31,11 @@ export class NewContactComponent implements OnInit {
 
   @ViewChild(DirectivesDirective, { read: ViewContainerRef })
   public dynamicPhoneRef!: ViewContainerRef; // variable para guardar mi input de email
-  private componentRef: ComponentRef<PhoneDynamicComponent>[] = [];
+  private componentRefArray: ComponentRef<PhoneDynamicComponent>[] = [];
+  private componentRef!: ComponentRef<PhoneDynamicComponent>;
+  dynamicPhone: any[] = [];
+  valuePhone: string[] = [];
+
   public countComponent!: number;
   selectedType: string = '';
   types = [
@@ -42,12 +53,15 @@ export class NewContactComponent implements OnInit {
   tagSelected: string[] = [];
   inputSelect: string[] = [];
   availableTags: string[] = [];
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private createcontactService: ContactService,
-    private dialogLoading: DialogLoadingService
+    private dialogLoading: DialogLoadingService,
+    private componentFactory: ComponentFactoryResolver,
+
   ) {
     // this.tagToLocalStorage = localStorage.getItem('tags');
     // console.log("LocalStorageTag",this.tagToLocalStorage);
@@ -70,11 +84,10 @@ export class NewContactComponent implements OnInit {
       contactBirthday: ['', Validators.required],
       contactPhoto: [''],
       contactNotes: [''],
-      contactTags:[this.tagSelected],
+      contactTags: [this.tagSelected],
       newTag: [''],
       contactPhone: this.fb.array([]),
     });
-
 
     // carga la informacion guardada en localStorage de Tags
     const storedTags = localStorage.getItem('tags');
@@ -93,9 +106,8 @@ export class NewContactComponent implements OnInit {
   }
 
   saveContact() {
-
     console.log(this.tagSelected);
-    this.formRegister.value.contactTags=this.tagSelected;
+    this.formRegister.value.contactTags = this.tagSelected;
     const modelRegister = {
       contactFirstName: this.formRegister.value.contactFirstName,
       contactLastName: this.formRegister.value.contactLastName,
@@ -105,7 +117,7 @@ export class NewContactComponent implements OnInit {
       contactBirthday: this.formRegister.value.contactBirthday,
       contactPhoto: this.formRegister.value.contactPhoto,
       contactNotes: this.formRegister.value.contactNotes,
-      contactPhone: this.formRegister.value.contactPhone,
+      contactPhone: this.valuePhone,
       contactTags: this.formRegister.value.contactTags,
     };
     console.log(modelRegister);
@@ -153,28 +165,71 @@ export class NewContactComponent implements OnInit {
     }
   }
 
-  createComponentPhone(): void {
-    const component = this.dynamicPhoneRef.createComponent(
+  createComponentPhone(
+    phoneFormDynamic: FormGroup,
+    phoneControDynamic: FormControl,
+    phoneValueType: number
+  ): void {
+    const component = this.componentFactory.resolveComponentFactory(
       PhoneDynamicComponent
     );
-    this.componentRef.push(component);
 
-    const componentIndex = this.componentRef.indexOf(component) + 2;
-    (component.instance as PhoneDynamicComponent).keyPhone = componentIndex;
+    this.componentRef = this.dynamicPhoneRef.createComponent(component);
+
+    this.componentRef.instance.phoneFormDynamic = phoneFormDynamic;
+    this.componentRef.instance.phoneControDynamic = phoneControDynamic;
+    this.componentRef.instance.phoneValueType = phoneValueType;
+
+    this.componentRefArray.push(this.componentRef);
+    console.log(this.componentRef);
   }
+
+  addPhones() {
+    const fg = new FormGroup({
+      phoneControDynamic: new FormControl('', [Validators.pattern(/^[0-9]*$/)]),
+    });
+  
+    const phoneValue = fg.controls['phoneControDynamic'];
+  
+    if (phoneValue) {
+      const subscription = phoneValue.valueChanges.subscribe(() => {
+        // Mapear los formularios a un array de strings
+        this.valuePhone = this.dynamicPhone.map((phone) => phone.get('phoneControDynamic').value);
+      });
+  
+      this.subscriptions.push(subscription);
+    }
+  
+    if (this.componentRefArray) {
+      this.createComponentPhone(fg, phoneValue, 1);
+      this.dynamicPhone.push(fg);
+      console.log('dinamycPhones', this.dynamicPhone);
+  
+      // Asignar this.dynamicPhone a this.valuePhone
+      this.valuePhone = this.dynamicPhone.map((phone) => phone.get('phoneControDynamic').value);
+    }
+  }
+  
+// En el ngOnDestroy
+ngOnDestroy() {
+  this.subscriptions.forEach(subscription => subscription.unsubscribe());
+}
   deleteComponentPhone(): void {
-    const index = this.componentRef.length - 1;
-    if (index >= 0 && this.componentRef.length) {
-      const componentRefToDelete = this.componentRef[index];
-      componentRefToDelete.destroy();
-      this.componentRef.splice(index, 1);
+   
+
+    if (this.componentRef) {
+      this.componentRef.destroy();
+    }
+    const index = this.componentRefArray.length - 1;
+    if (index >= 0 && this.componentRefArray.length) {
+      this.componentRef = this.componentRefArray[index];
+      this.componentRef.destroy();
+      this.componentRefArray.splice(index, 1);
       // this.componentRef[index-1].destroy();
     }
 
-    // if (this.componentRef && this.componentRef.hostView) {
-    //   // this.componentRef.destroy();
-    //   // this.count = this.count ? this.count - 1 : 0;
-    // }
+
+
   }
   get getcontactEmailFormArray() {
     return this.formRegister.get('contactEmail') as FormArray;
@@ -212,7 +267,7 @@ export class NewContactComponent implements OnInit {
       this.tagSelected.splice(i, 1);
     }
   }
-  
+
   deleteTagLocalStorage(i: number) {
     this.tagToLocalStorage.splice(i, 1);
     localStorage.setItem('contactTags', JSON.stringify(this.tagToLocalStorage));
@@ -221,28 +276,28 @@ export class NewContactComponent implements OnInit {
   }
 
   saveTags() {
-      const newTag = this.formRegister.get('newTag')?.value;
-    
-      if (newTag && !this.tagToLocalStorage.includes(newTag)) {
-        // Añadir el nuevo tag solo si no está duplicado
-        this.tagToLocalStorage.push(newTag);
-    
-        // Actualizar el localStorage con la clave 'tags'
-        localStorage.setItem('tags', JSON.stringify(this.tagToLocalStorage));
-    
-        // Actualizar el valor del formulario
-        this.formRegister.value.contactTags = this.tagToLocalStorage;
-      }
-    
-      this.formRegister.get('newTag')?.setValue('');
-    
-    
+    const newTag = this.formRegister.get('newTag')?.value;
+
+    if (newTag && !this.tagToLocalStorage.includes(newTag)) {
+      // Añadir el nuevo tag solo si no está duplicado
+      this.tagToLocalStorage.push(newTag);
+
+      // Actualizar el localStorage con la clave 'tags'
+      localStorage.setItem('tags', JSON.stringify(this.tagToLocalStorage));
+
+      // Actualizar el valor del formulario
+      this.formRegister.value.contactTags = this.tagToLocalStorage;
+    }
+
+    this.formRegister.get('newTag')?.setValue('');
   }
 
   addSelectedTagFromSelect() {
-    if(this.tagSelected && !this.tagSelected.includes(this.formRegister.get('contactTags')?.value))
-    this.tagSelected.push(this.formRegister.get('contactTags')?.value);
+    if (
+      this.tagSelected &&
+      !this.tagSelected.includes(this.formRegister.get('contactTags')?.value)
+    )
+      this.tagSelected.push(this.formRegister.get('contactTags')?.value);
     console.log(this.tagSelected);
   }
 }
-

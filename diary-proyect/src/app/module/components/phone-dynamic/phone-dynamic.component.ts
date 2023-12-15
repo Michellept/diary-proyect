@@ -9,8 +9,11 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class PhoneDynamicComponent {
 
 
-  public keyPhone!:number;
+  public index!:number;
   @Input() phoneFormDynamic!: FormGroup;
   @Input() phoneControDynamic!: FormControl;
+  @Input() phoneValueType!: number;
+  
+
 
 }
